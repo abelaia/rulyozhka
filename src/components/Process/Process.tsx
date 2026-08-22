@@ -12,7 +12,7 @@ export default function Process() {
       <div className="container">
         <div className={`section-head reveal ${headInView ? 'is-visible' : ''}`} ref={headRef}>
           <div>
-            <p className="section-head__overline">Как мы работаем</p>
+            <p className="section-head__overline">Формат работы</p>
             <h2 className="section-head__title">4 шага до нового салона</h2>
           </div>
           <p className="section-head__note">

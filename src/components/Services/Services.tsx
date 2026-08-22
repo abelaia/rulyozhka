@@ -20,11 +20,11 @@ export default function Services() {
         <div className={`section-head reveal ${headInView ? 'is-visible' : ''}`} ref={headRef}>
           <div>
             <p className="section-head__overline">Услуги</p>
-            <h2 className="section-head__title">Что мы перетягиваем</h2>
+            <h2 className="section-head__title">Что перетягиваю</h2>
           </div>
           <p className="section-head__note">
-            От руля до полного салона — работаем с любым транспортом, от городской
-            малолитражки до катера.
+            От руля до полного салона — любой транспорт: от городской малолитражки
+            до катера.
           </p>
         </div>
 
@@ -35,7 +35,7 @@ export default function Services() {
         </div>
 
         <div className="services__foot">
-          <p>Не нашли своё? Перетягиваем также квадроциклы, снегоходы, автодома и спецтехнику.</p>
+          <p>Не нашли своё? Перетягиваю также квадроциклы, снегоходы, автодома и спецтехнику.</p>
           <a href="#contacts" className="btn btn--outline">
             Обсудить проект
           </a>

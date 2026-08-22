@@ -10,7 +10,7 @@ interface Stat {
 
 const STATS: Stat[] = [
   { value: 12, suffix: '+', label: 'лет опыта' },
-  { value: 480, suffix: '+', label: 'салонов перетянуто' },
+  { value: 480, suffix: '+', label: 'выполненных работ' },
   { value: 3, suffix: ' года', label: 'гарантии на швы' },
 ];
 
@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="hero__scrim" />
 
       <div className="container hero__content">
-        <p className="hero__overline">Ателье перетяжки салонов · с 2012 года</p>
+        <p className="hero__overline">Мастер по перетяжке салонов · с 2012 года</p>
         <h1 className="hero__title">
           <span className="hero__title-line">
             <span className="hero__title-inner" style={{ animationDelay: '0.1s' }}>
@@ -61,7 +61,7 @@ export default function Hero() {
         </h1>
         <p className="hero__subtitle">
           Перетяжка салонов автомобилей, мотоциклов и лодок — натуральная кожа, алькантара
-          и экокожа. Шьём по заводским лекалам, даём гарантию 3 года.
+          и экокожа. Шью по заводским лекалам и даю гарантию 3 года.
         </p>
 
         <div className="hero__actions">

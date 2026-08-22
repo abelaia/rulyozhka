@@ -89,17 +89,22 @@ export default function Reviews() {
                       <StarIcon key={i} />
                     ))}
                   </div>
-                  <p className="review-card__text">{review.text}</p>
-                  <div className="review-card__footer">
-                    <span className="review-card__avatar">{review.name[0]}</span>
-                    <div>
-                      <p className="review-card__name">{review.name}</p>
-                      <p className="review-card__car">
-                        {review.car} · {review.project}
-                      </p>
-                    </div>
+                <p className="review-card__text">{review.text}</p>
+                {review.reply && (
+                  <blockquote className="review-card__reply">
+                    <span className="review-card__reply-label">Ответ</span>
+                    {review.reply}
+                  </blockquote>
+                )}
+                <div className="review-card__footer">
+                  <span className="review-card__avatar">{review.name[0]}</span>
+                  <div>
+                    <p className="review-card__name">{review.name}</p>
+                    <p className="review-card__car">
+                      {review.date} · {review.project}
+                    </p>
                   </div>
-                </article>
+                </div>                </article>
               </div>
             ))}
           </div>

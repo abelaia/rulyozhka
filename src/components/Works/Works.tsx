@@ -25,8 +25,8 @@ export default function Works() {
       <div className="container">
         <div className={`section-head reveal ${headInView ? 'is-visible' : ''}`} ref={headRef}>
           <div>
-            <p className="section-head__overline">Портфолио</p>
-            <h2 className="section-head__title">Наши работы</h2>
+            <p className="section-head__overline">Галерея</p>
+            <h2 className="section-head__title">Портфолио</h2>
           </div>
           <div className="works__filters" role="tablist" aria-label="Фильтр работ">
             {categories.map((category) => (
@@ -65,7 +65,7 @@ export default function Works() {
 
         <div className="works__foot">
           <p className="works__count">
-            Показано {filtered.length} из {works.length} · полный каталог — в нашем Telegram
+            Показано {filtered.length} из {works.length} · полный каталог — в Telegram
           </p>
           <a href="#contacts" className="btn btn--outline-accent">
             Хочу так же

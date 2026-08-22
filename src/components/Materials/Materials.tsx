@@ -12,11 +12,11 @@ export default function Materials() {
         <div className={`section-head reveal ${headInView ? 'is-visible' : ''}`} ref={headRef}>
           <div>
             <p className="section-head__overline">Материалы</p>
-            <h2 className="section-head__title">Из чего шьём</h2>
+            <h2 className="section-head__title">Из чего шью</h2>
           </div>
           <p className="section-head__note">
             Только проверенные поставщики из Италии, Германии и Кореи. Образцы можно
-            потрогать в ателье или заказать выезд с каталогом.
+            потрогать в мастерской или заказать выезд с каталогом.
           </p>
         </div>
 

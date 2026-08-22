@@ -123,8 +123,8 @@ export default function Contacts() {
             <p className="section-head__overline">Контакты</p>
             <h2 className="section-head__title">Запишитесь на замер</h2>
             <p className="contacts__lead">
-              Приезжайте в ателье — покажем материалы вживую и посчитаем точную смету.
-              Или отправьте фото салона в мессенджер: ответим за 15 минут.
+              Приезжайте в мастерскую — покажу материалы вживую и посчитаю точную смету.
+              Или отправьте фото салона в мессенджер: отвечу за 15 минут.
             </p>
 
             <div className="contacts__items">
@@ -143,7 +143,7 @@ export default function Contacts() {
                   <PinIcon />
                 </span>
                 <span>
-                  <span className="contact-item__label">Адрес ателье</span>
+                  <span className="contact-item__label">Адрес мастерской</span>
                   <span className="contact-item__value">{contacts.address}</span>
                   <span className="contact-item__extra">{contacts.addressExtra}</span>
                 </span>
@@ -230,7 +230,7 @@ export default function Contacts() {
 
             <div className="form-field">
               <label className="form-field__label" htmlFor="contact-service">
-                Что перетягиваем?
+                Что перетянуть?
               </label>
               <div className="form-field__select-wrap">
                 <select
@@ -275,7 +275,7 @@ export default function Contacts() {
                 </span>
                 <h4 className="contacts__success-title">Заявка отправлена!</h4>
                 <p className="contacts__success-text">
-                  Спасибо, {form.name}. Мы свяжемся с вами по номеру {form.phone} в ближайшее время.
+                  Спасибо, {form.name}. Свяжусь с вами по номеру {form.phone} в ближайшее время.
                 </p>
                 <button type="button" className="btn btn--outline" onClick={resetForm}>
                   Отправить ещё одну
