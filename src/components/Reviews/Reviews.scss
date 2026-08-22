@@ -1,0 +1,171 @@
+.reviews {
+  background: var(--color-bg);
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  &__btn {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s var(--ease);
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-on-accent);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: scale(0.94);
+    }
+  }
+
+  &__counter {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    min-width: 78px;
+    text-align: center;
+
+    em {
+      font-style: normal;
+      color: var(--color-accent);
+    }
+  }
+
+  &__viewport {
+    overflow: hidden;
+  }
+
+  &__track {
+    display: flex;
+    transition: transform 0.55s var(--ease);
+  }
+
+  &__slot {
+    flex: 0 0 calc(100% / 3);
+  }
+}
+
+.review-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+  margin-right: 24px;
+  padding: 30px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s var(--ease);
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    transform: translateY(-4px);
+  }
+
+  &__quote {
+    position: absolute;
+    top: 14px;
+    right: 24px;
+    font-family: var(--font-display);
+    font-size: 92px;
+    line-height: 1;
+    color: var(--color-accent);
+    opacity: 0.16;
+  }
+
+  &__stars {
+    display: flex;
+    gap: 4px;
+    color: var(--color-accent);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__text {
+    font-size: 15px;
+    line-height: 1.68;
+  }
+
+  &__footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 18px;
+  }
+
+  &__avatar {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-text-primary);
+    color: var(--color-invert);
+    font-family: var(--font-display);
+    font-size: 19px;
+  }
+
+  &__name {
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  &__car {
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 1020px) {
+    padding: 26px;
+  }
+
+  @media (max-width: 640px) {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .reviews__slot {
+    flex-basis: 50%;
+  }
+}
+
+@media (max-width: 640px) {
+  .reviews__slot {
+    flex-basis: 100%;
+  }
+}
