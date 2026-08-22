@@ -54,10 +54,10 @@ function CheckIcon() {
   );
 }
 
-function WhatsappIcon() {
+function MaxIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 2a8 8 0 1 1-4.2 14.8l-.5-.3-3 .8.8-2.9-.3-.5A8 8 0 0 1 12 4Zm-3 4.2c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.1 2.3.9 2.8.7 3.3.7.5-.1 1.6-.7 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.2-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.6 6.6 0 0 1-3.2-2.8c-.2-.4 0-.5.1-.7l.6-.7c.1-.2.1-.4 0-.6L9.6 8.6c-.2-.4-.4-.4-.6-.4Z" />
+      <path d="M4 20V5h3.2L12 13l4.8-8H20v15h-3v-9.3L13.4 18h-2.8L7 10.7V20H4Z" />
     </svg>
   );
 }
@@ -79,7 +79,7 @@ function VkIcon() {
 }
 
 const SOCIAL_ICONS: Record<string, () => React.ReactElement> = {
-  whatsapp: WhatsappIcon,
+  max: MaxIcon,
   telegram: TelegramIcon,
   vk: VkIcon,
 };

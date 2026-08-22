@@ -14,7 +14,7 @@ export const MATERIALS: Material[] = [
   {
     id: 'leather',
     title: 'Натуральная кожа',
-    subtitle: 'Италия · Германия',
+    subtitle: 'Премиум-класс',
     badge: 'Премиум',
     image: IMAGES.materials.leather,
     features: [
@@ -26,7 +26,7 @@ export const MATERIALS: Material[] = [
   {
     id: 'alcantara',
     title: 'Алькантара',
-    subtitle: 'Оригинал, Италия',
+    subtitle: 'Оригинальный материал',
     badge: 'Спорт',
     image: IMAGES.materials.alcantara,
     features: [
@@ -37,8 +37,8 @@ export const MATERIALS: Material[] = [
   },
   {
     id: 'ecoleather',
-    title: 'Экокожа Premium',
-    subtitle: 'Корея · Польша',
+    title: 'Экокожа',
+    subtitle: 'Баланс цены и качества',
     badge: 'Практика',
     texture: 'perforated',
     features: [
@@ -71,7 +71,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
   {
     index: '01',
     title: 'Заявка и расчёт',
-    text: 'Присылаете фото салона в WhatsApp или Telegram — за 15 минут рассчитаю смету и подберу материал.',
+    text: 'Присылаете фото салона в MAX или Telegram — за 15 минут рассчитаю смету и подберу материал.',
   },
   {
     index: '02',
@@ -180,17 +180,17 @@ export interface Social {
 }
 
 export const SOCIALS: Social[] = [
-  { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/79185553131' },
+  { id: 'max', label: 'MAX', href: 'https://max.ru' },
   { id: 'telegram', label: 'Telegram', href: 'https://t.me/rulyozhka' },
   { id: 'vk', label: 'ВКонтакте', href: 'https://vk.com/rulyozhka' },
 ];
 
 export const CONTACTS = {
-  phone: '+7 (918) 555-31-31',
-  phoneHref: 'tel:+79185553131',
-  address: 'г. Ростов-на-Дону, ул. Малиновского, 25',
-  addressExtra: 'Заезд со стороны парковки, бокс №7',
-  email: 'hello@rulyozhka.ru',
+  phone: '+7 (988) 669-97-88',
+  phoneHref: 'tel:+79886699788',
+  address: 'Краснодарский край, ст. Варениковская, ул. Первомайская, 193Б',
+  addressExtra: 'Предварительно позвоните — согласуем время визита',
+  email: 'kolyabely@yandex.ru',
   hours: 'Пн–Сб: 9:00–19:00',
   hoursExtra: 'Воскресенье — по записи',
 };

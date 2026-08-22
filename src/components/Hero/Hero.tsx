@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="hero__scrim" />
 
       <div className="container hero__content">
-        <p className="hero__overline">Мастер по перетяжке салонов · с 2012 года</p>
+        <p className="hero__overline">Мастер по перетяжке салонов · с 2019 года</p>
         <h1 className="hero__title">
           <span className="hero__title-line">
             <span className="hero__title-inner" style={{ animationDelay: '0.1s' }}>
