@@ -50,12 +50,17 @@ export default function Hero() {
         <h1 className="hero__title">
           <span className="hero__title-line">
             <span className="hero__title-inner" style={{ animationDelay: '0.1s' }}>
-              Салон, в который
+              Новая <em className="hero__title-word">жизнь</em>
             </span>
           </span>
           <span className="hero__title-line">
             <span className="hero__title-inner" style={{ animationDelay: '0.25s' }}>
-              влюбляешься <em className="hero__title-word">заново</em>
+              салона вашего
+            </span>
+          </span>
+          <span className="hero__title-line">
+            <span className="hero__title-inner" style={{ animationDelay: '0.4s' }}>
+              автомобиля
             </span>
           </span>
         </h1>
