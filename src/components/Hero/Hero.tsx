@@ -53,7 +53,7 @@ export default function Hero() {
               Новая <em className="hero__title-word">жизнь</em>
             </span>
           </span>
-          <span className="hero__title-line hero__title-line--outline">
+          <span className="hero__title-line">
             <span className="hero__title-inner" style={{ animationDelay: '0.25s' }}>
               салона вашего
             </span>
