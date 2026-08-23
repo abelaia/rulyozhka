@@ -5,8 +5,7 @@ export interface Material {
   title: string;
   subtitle: string;
   badge: string;
-  image?: string;
-  texture?: 'perforated' | 'weave';
+  image: string;
   features: string[];
 }
 
@@ -40,7 +39,7 @@ export const MATERIALS: Material[] = [
     title: 'Экокожа',
     subtitle: 'Баланс цены и качества',
     badge: 'Практика',
-    texture: 'perforated',
+    image: IMAGES.materials.eco,
     features: [
       'Неотличима от натуральной',
       'Не боится влаги и мороза',
@@ -52,7 +51,7 @@ export const MATERIALS: Material[] = [
     title: 'Морской винил',
     subtitle: 'Для лодок и катеров',
     badge: 'Влагостойкий',
-    texture: 'weave',
+    image: IMAGES.materials.marine,
     features: [
       'Устойчив к воде и соли',
       'Не выцветает на солнце',

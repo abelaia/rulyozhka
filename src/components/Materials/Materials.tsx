@@ -39,12 +39,8 @@ function MaterialCard({ material, delay }: { material: Material; delay: number }
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div
-        className={`material-card__swatch ${
-          material.texture ? `material-card__swatch--${material.texture}` : ''
-        }`}
-      >
-        {material.image && <img src={material.image} alt={material.title} loading="lazy" />}
+      <div className="material-card__swatch">
+        <img src={material.image} alt={material.title} loading="lazy" />
         <span className="material-card__badge">{material.badge}</span>
       </div>
       <div className="material-card__body">
