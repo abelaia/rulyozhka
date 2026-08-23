@@ -58,9 +58,9 @@
   &__title {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(58px, 9.5vw, 138px);
-    line-height: 0.92;
-    letter-spacing: 0.01em;
+    font-size: clamp(46px, 7.4vw, 104px);
+    line-height: 0.96;
+    letter-spacing: 0.015em;
     text-transform: uppercase;
   }
 
@@ -74,6 +74,17 @@
     display: inline-block;
     transform: translateY(110%);
     animation: hero-rise 0.9s var(--ease) forwards;
+  }
+
+  &__title-line--outline &__title-inner {
+    color: rgba(242, 242, 240, 0.88);
+  }
+
+  @supports (-webkit-text-stroke: 1px #f2f2f0) {
+    &__title-line--outline &__title-inner {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(242, 242, 240, 0.92);
+    }
   }
 
   &__title-word {
