@@ -15,8 +15,8 @@ export default function Materials() {
             <h2 className="section-head__title">Из чего шью</h2>
           </div>
           <p className="section-head__note">
-            Только проверенные поставщики из Италии, Германии и Кореи. Образцы можно
-            потрогать в мастерской или заказать выезд с каталогом.
+            Только проверенные материалы. Образцы можно потрогать в мастерской
+            или заказать выезд с каталогом.
           </p>
         </div>
 
@@ -39,12 +39,8 @@ function MaterialCard({ material, delay }: { material: Material; delay: number }
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div
-        className={`material-card__swatch ${
-          material.texture ? `material-card__swatch--${material.texture}` : ''
-        }`}
-      >
-        {material.image && <img src={material.image} alt={material.title} loading="lazy" />}
+      <div className="material-card__swatch">
+        <img src={material.image} alt={material.title} loading="lazy" />
         <span className="material-card__badge">{material.badge}</span>
       </div>
       <div className="material-card__body">

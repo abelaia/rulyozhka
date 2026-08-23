@@ -23,7 +23,7 @@ export default function Services() {
             <h2 className="section-head__title">Что перетягиваю</h2>
           </div>
           <p className="section-head__note">
-            От руля до полного салона — любой транспорт: от городской малолитражки
+            От руля до полного салона — любой транспорт: от городского автомобиля
             до катера.
           </p>
         </div>

@@ -55,33 +55,6 @@
       object-fit: cover;
       transition: transform 0.6s var(--ease);
     }
-
-    &--perforated {
-      background-color: #141418;
-      background-image: radial-gradient(circle, rgba(242, 242, 240, 0.18) 1.6px, transparent 1.7px);
-      background-size: 13px 13px;
-
-      &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, transparent 40%, rgba(225, 6, 0, 0.16) 100%);
-      }
-    }
-
-    &--weave {
-      background-color: #17171c;
-      background-image:
-        repeating-linear-gradient(45deg, rgba(242, 242, 240, 0.06) 0 2px, transparent 2px 9px),
-        repeating-linear-gradient(-45deg, rgba(242, 242, 240, 0.06) 0 2px, transparent 2px 9px);
-
-      &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, transparent 40%, rgba(225, 6, 0, 0.16) 100%);
-      }
-    }
   }
 
   &__badge {
@@ -109,7 +82,7 @@
 
   &__title {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 26px;
     line-height: 1;
     text-transform: uppercase;

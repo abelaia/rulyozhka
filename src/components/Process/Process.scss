@@ -42,6 +42,7 @@
 
   &__step-index {
     font-family: var(--font-display);
+    font-weight: 600;
     font-size: 52px;
     line-height: 1;
     color: transparent;
@@ -54,7 +55,7 @@
   &__step-title {
     margin: 16px 0 10px;
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 25px;
     line-height: 1;
     text-transform: uppercase;

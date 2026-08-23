@@ -9,7 +9,9 @@ export const IMAGES = {
     waverunner: 'https://image.qwenlm.ai/generated-images/8b16ea4d-a73a-4ea3-9b5f-9c88ed10d9d4/_result.png',
   },
   materials: {
-    leather: 'https://image.qwenlm.ai/generated-images/53f4f373-0ba4-4447-90a5-9ee0448f4e37/_result.png',
-    alcantara: 'https://image.qwenlm.ai/generated-images/5961196c-8d25-417c-ae19-00b225e0fc95/_result.png',
+    leather: 'https://images.pexels.com/photos/13172273/pexels-photo-13172273.jpeg?auto=compress&cs=tinysrgb&w=800',
+    alcantara: 'https://images.pexels.com/photos/35993311/pexels-photo-35993311.jpeg?auto=compress&cs=tinysrgb&w=800',
+    eco: 'https://images.pexels.com/photos/6045356/pexels-photo-6045356.jpeg?auto=compress&cs=tinysrgb&w=800',
+    marine: 'https://images.pexels.com/photos/17859032/pexels-photo-17859032.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
 };

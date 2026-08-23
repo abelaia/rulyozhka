@@ -59,6 +59,7 @@
 
   &__logo-text {
     font-family: var(--font-display);
+    font-weight: 600;
     font-size: 25px;
     letter-spacing: 0.1em;
     line-height: 1;
@@ -108,34 +109,6 @@
     display: flex;
     align-items: center;
     gap: 14px;
-  }
-
-  &__theme {
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    background: transparent;
-    color: var(--color-text-primary);
-    cursor: pointer;
-    transition:
-      color 0.25s ease,
-      border-color 0.25s ease,
-      transform 0.35s var(--ease);
-
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    &:hover {
-      border-color: var(--color-accent);
-      color: var(--color-accent);
-      transform: rotate(20deg);
-    }
   }
 
   &__cta {
@@ -224,6 +197,7 @@
     gap: 16px;
     padding: 14px 0;
     font-family: var(--font-display);
+    font-weight: 600;
     font-size: 38px;
     text-transform: uppercase;
     letter-spacing: 0.03em;
