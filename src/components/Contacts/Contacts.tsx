@@ -124,7 +124,7 @@ export default function Contacts() {
             <h2 className="section-head__title">Запишитесь на замер</h2>
             <p className="contacts__lead">
               Приезжайте в мастерскую — покажу материалы вживую и посчитаю точную смету.
-              Или отправьте фото салона в мессенджер: отвечу за 15 минут.
+              Или отправьте фото салона в MAX или Telegram.
             </p>
 
             <div className="contacts__items">

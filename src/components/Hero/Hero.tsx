@@ -11,7 +11,6 @@ interface Stat {
 const STATS: Stat[] = [
   { value: 7, suffix: '+', label: 'лет опыта' },
   { value: 1000, suffix: '+', label: 'выполненных работ' },
-  { value: 3, suffix: ' года', label: 'гарантии на швы' },
 ];
 
 function ArrowIcon() {
@@ -46,27 +45,32 @@ export default function Hero() {
       <div className="hero__scrim" />
 
       <div className="container hero__content">
-        <p className="hero__overline">Мастер по перетяжке салонов · с 2019 года</p>
+        <p className="hero__overline">Мастер по перетяжке салонов · с 2018 года</p>
         <h1 className="hero__title">
           <span className="hero__title-line">
             <span className="hero__title-inner" style={{ animationDelay: '0.1s' }}>
-              Новая <em className="hero__title-word">жизнь</em>
+              Интерьерный 
             </span>
           </span>
           <span className="hero__title-line">
-            <span className="hero__title-inner" style={{ animationDelay: '0.25s' }}>
-              салона вашего
+            <span className="hero__title-inner" style={{ animationDelay: '0.2s' }}>
+              <em className="hero__title-word">
+                тюнинг
+              </em>
             </span>
           </span>
           <span className="hero__title-line">
-            <span className="hero__title-inner" style={{ animationDelay: '0.4s' }}>
+            <span
+              className="hero__title-inner"
+              style={{ animationDelay: '0.4s' }}
+            >
               автомобиля
             </span>
           </span>
         </h1>
         <p className="hero__subtitle">
           Перетяжка салонов автомобилей, мотоциклов и лодок — натуральная кожа, алькантара
-          и экокожа. Шью по заводским лекалам и даю гарантию 3 года.
+          и экокожа.
         </p>
 
         <div className="hero__actions">

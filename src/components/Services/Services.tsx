@@ -23,8 +23,7 @@ export default function Services() {
             <h2 className="section-head__title">Что перетягиваю</h2>
           </div>
           <p className="section-head__note">
-            От руля до полного салона — любой транспорт: от городского автомобиля
-            до катера.
+            От руля до полного салона — любой транспорт.
           </p>
         </div>
 
@@ -35,7 +34,7 @@ export default function Services() {
         </div>
 
         <div className="services__foot">
-          <p>Не нашли своё? Перетягиваю также квадроциклы, снегоходы, автодома и спецтехнику.</p>
+          <p>Не нашли своё? Перетяну любой другой транспорт и элементы интерьера по вашему запросу.</p>
           <a href="#contacts" className="btn btn--outline">
             Обсудить проект
           </a>

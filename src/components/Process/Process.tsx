@@ -15,10 +15,6 @@ export default function Process() {
             <p className="section-head__overline">Формат работы</p>
             <h2 className="section-head__title">4 шага до нового салона</h2>
           </div>
-          <p className="section-head__note">
-            Прозрачный процесс без сюрпризов: цена и срок фиксируются в договоре
-            до начала работ.
-          </p>
         </div>
 
         <div className="process__grid">
@@ -28,8 +24,7 @@ export default function Process() {
         </div>
 
         <p className={`process__note reveal ${noteInView ? 'is-visible' : ''}`} ref={noteRef}>
-          Средний срок полной перетяжки салона — 4–6 дней. На это время поможем
-          с подменным автомобилем.
+          Средний срок полной перетяжки салона от 5 дней.
         </p>
       </div>
     </section>

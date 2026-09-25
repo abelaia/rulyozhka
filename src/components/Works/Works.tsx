@@ -65,7 +65,7 @@ export default function Works() {
 
         <div className="works__foot">
           <p className="works__count">
-            Показано {filtered.length} из {works.length} · полный каталог — в Telegram
+            Показано {filtered.length} из {works.length} · больше работ в Telegram
           </p>
           <a href="#contacts" className="btn btn--outline-accent">
             Хочу так же
