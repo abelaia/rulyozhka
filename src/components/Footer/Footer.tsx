@@ -82,7 +82,7 @@ export default function Footer() {
 
         <div className="footer__bottom">
           <p>© {year} RULYOZHKA. Все права защищены.</p>
-          <p className="footer__tagline">Перетяжка салонов с гарантией 3 года</p>
+          <p className="footer__tagline">Перетяжка салонов.</p>
           <button type="button" className="footer__top-btn" onClick={scrollToTop} aria-label="Наверх">
             <ArrowUpIcon />
           </button>

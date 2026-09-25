@@ -9,7 +9,6 @@ const MARQUEE_ITEMS = [
   'Потолки',
   'Лодки и катера',
   'Мотоциклы',
-  'Гарантия 3 года',
 ];
 
 export default function Marquee() {
