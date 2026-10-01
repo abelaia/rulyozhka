@@ -10,7 +10,7 @@ export default function Logo({ onClick }: { onClick?: () => void }) {
       {logoError ? (
         <span className="logo__mark">R</span>
       ) : (
-        <img src="/logo.png" alt="" className="logo__img" onError={() => setLogoError(true)} />
+        <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="logo__img" onError={() => setLogoError(true)} />
       )}
       <span className="logo__text">
         RULYOZHKA<span className="logo__dot">.</span>
