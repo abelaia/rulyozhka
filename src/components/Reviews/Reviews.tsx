@@ -1,113 +1,107 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { REVIEWS as reviews } from '../../constants/site';
-import { useInView } from '../../hooks';
+import { ArrowLeftIcon, ArrowRightIcon, StarIcon } from '../ui/icons';
+import { EASE, VIEWPORT } from '../ui/motion';
+import SectionHead from '../ui/SectionHead';
 import './Reviews.scss';
 
-function ArrowLeftIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 12H5m6-6-6 6 6 6" />
-    </svg>
-  );
-}
-
-function ArrowRightIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12h14m-6-6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function StarIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2.5l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 17.4l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8L12 2.5z" />
-    </svg>
-  );
-}
-
-function getPerPage(width: number) {
-  if (width < 640) return 1;
-  if (width < 1020) return 2;
-  return 3;
-}
-
 export default function Reviews() {
+  const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
-  const [perPage, setPerPage] = useState(() => getPerPage(window.innerWidth));
-  const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
+  const [progress, setProgress] = useState(0);
 
+  // Нативная прокрутка со snap: свайпается на телефоне, кнопки листают по карточке
   useEffect(() => {
-    const onResize = () => setPerPage(getPerPage(window.innerWidth));
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    const track = trackRef.current;
+    if (!track) return;
+    const onScroll = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      setProgress(max > 0 ? track.scrollLeft / max : 0);
+      const card = track.firstElementChild as HTMLElement | null;
+      if (card) setIndex(Math.round(track.scrollLeft / (card.offsetWidth + 24)));
+    };
+    onScroll();
+    track.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      track.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
-  const maxIndex = Math.max(reviews.length - perPage, 0);
-
-  useEffect(() => {
-    setIndex((prev) => Math.min(prev, maxIndex));
-  }, [maxIndex]);
-
-  const next = () => setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  const prev = () => setIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  const scrollByCard = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    const card = track?.firstElementChild as HTMLElement | null;
+    if (!track || !card) return;
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    const atStart = track.scrollLeft <= 4;
+    if (direction === 1 && atEnd) return track.scrollTo({ left: 0, behavior: 'smooth' });
+    if (direction === -1 && atStart) return track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+    track.scrollBy({ left: direction * (card.offsetWidth + 24), behavior: 'smooth' });
+  };
 
   return (
     <section className="reviews section" id="reviews">
       <div className="container">
-        <div className={`section-head reveal ${headInView ? 'is-visible' : ''}`} ref={headRef}>
-          <div>
-            <p className="section-head__overline">Отзывы</p>
-            <h2 className="section-head__title">Что говорят владельцы</h2>
-          </div>
+        <SectionHead index="05" overline="Отзывы" title="Что говорят владельцы" accent={['владельцы']}>
           <div className="reviews__controls">
-            <button type="button" className="reviews__btn" onClick={prev} aria-label="Предыдущие отзывы">
+            <button type="button" className="reviews__btn" onClick={() => scrollByCard(-1)} aria-label="Предыдущие отзывы">
               <ArrowLeftIcon />
             </button>
-            <span className="reviews__counter">
-              <em>{String(index + 1).padStart(2, '0')}</em> / {String(reviews.length).padStart(2, '0')}
+            <span className="reviews__counter mono">
+              <em>{String(Math.min(index + 1, reviews.length)).padStart(2, '0')}</em> / {String(reviews.length).padStart(2, '0')}
             </span>
-            <button type="button" className="reviews__btn" onClick={next} aria-label="Следующие отзывы">
+            <button type="button" className="reviews__btn" onClick={() => scrollByCard(1)} aria-label="Следующие отзывы">
               <ArrowRightIcon />
             </button>
           </div>
-        </div>
+        </SectionHead>
+      </div>
 
-        <div className="reviews__viewport">
-          <div
-            className="reviews__track"
-            style={{ transform: `translateX(-${index * (100 / perPage)}%)` }}
+      <div className="reviews__track" ref={trackRef}>
+        {reviews.map((review, i) => (
+          <motion.article
+            className="review-card"
+            key={review.id}
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 0.8, delay: Math.min(i, 3) * 0.1, ease: EASE }}
           >
-            {reviews.map((review) => (
-              <div className="reviews__slot" key={review.id}>
-                <article className="review-card">
-                  <span className="review-card__quote">”</span>
-                  <div className="review-card__stars" aria-label={`Оценка ${review.rating} из 5`}>
-                    {Array.from({ length: review.rating }).map((_, i) => (
-                      <StarIcon key={i} />
-                    ))}
-                  </div>
-                <p className="review-card__text">{review.text}</p>
-                {review.reply && (
-                  <blockquote className="review-card__reply">
-                    <span className="review-card__reply-label">Ответ</span>
-                    {review.reply}
-                  </blockquote>
-                )}
-                <div className="review-card__footer">
-                  <span className="review-card__avatar">{review.name[0]}</span>
-                  <div>
-                    <p className="review-card__name">{review.name}</p>
-                    <p className="review-card__car">
-                      {review.date} · {review.project}
-                    </p>
-                  </div>
-                </div>                </article>
+            <div className="review-card__head">
+              <div className="review-card__stars" aria-label={`Оценка ${review.rating} из 5`}>
+                {Array.from({ length: review.rating }).map((_, star) => (
+                  <StarIcon key={star} />
+                ))}
               </div>
-            ))}
-          </div>
+              <span className="review-card__quote" aria-hidden="true">
+                ”
+              </span>
+            </div>
+            <p className="review-card__project mono">{review.project}</p>
+            <p className="review-card__text">{review.text}</p>
+            {review.reply && (
+              <blockquote className="review-card__reply">
+                <span className="review-card__reply-label mono">Ответ</span>
+                {review.reply}
+              </blockquote>
+            )}
+            <div className="review-card__footer">
+              <span className="review-card__avatar">{review.name[0]}</span>
+              <div>
+                <p className="review-card__name">{review.name}</p>
+                <p className="review-card__date">{review.date}</p>
+              </div>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+
+      <div className="container">
+        <div className="reviews__progress" aria-hidden="true">
+          <span style={{ transform: `scaleX(${0.12 + progress * 0.88})` }} />
         </div>
       </div>
     </section>

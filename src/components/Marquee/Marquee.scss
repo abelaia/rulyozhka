@@ -1,14 +1,42 @@
+// Две перекрещенные ленты — как гоночные полосы
 .marquee {
-  background: var(--color-accent);
-  color: #101012;
-  padding: 16px 0;
+  position: relative;
+  height: 220px;
   overflow: hidden;
-  border-block: 2px solid #101012;
+  display: grid;
+  place-items: center;
+
+  &__tape {
+    position: absolute;
+    left: -5%;
+    width: 110%;
+    padding: 18px 0;
+    overflow: hidden;
+
+    &--dark {
+      transform: rotate(2.5deg);
+      background: var(--color-surface-2);
+      border-block: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+    }
+
+    &--accent {
+      transform: rotate(-2.5deg);
+      background: var(--color-accent);
+      color: var(--color-on-accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+  }
 
   &__track {
     display: flex;
     width: max-content;
-    animation: marquee-move 30s linear infinite;
+    animation: marquee-scroll 38s linear infinite;
+
+    &--reverse {
+      animation-direction: reverse;
+      animation-duration: 46s;
+    }
   }
 
   &:hover &__track {
@@ -16,25 +44,32 @@
   }
 
   &__item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    white-space: nowrap;
+    gap: 36px;
+    padding-right: 36px;
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 28px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-weight: 700;
+    font-size: clamp(20px, 2.4vw, 30px);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
 
-    &::after {
-      content: '◆';
-      font-size: 12px;
-      margin: 0 26px;
-      opacity: 0.5;
+  &__sep {
+    font-size: 0.6em;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 640px) {
+    height: 160px;
+
+    &__tape {
+      padding: 12px 0;
     }
   }
 }
 
-@keyframes marquee-move {
+@keyframes marquee-scroll {
   to {
     transform: translateX(-50%);
   }

@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { CONTACTS as contacts, SOCIALS as socials, SERVICE_OPTIONS as serviceOptions } from '../../constants/site';
-import { useInView } from '../../hooks';
+import { CheckIcon, ClockIcon, MailIcon, PhoneIcon, PinIcon, SOCIAL_ICONS } from '../ui/icons';
+import { EASE, Magnetic, Reveal, SplitText } from '../ui/motion';
 import './Contacts.scss';
 
 type FormStatus = 'idle' | 'sending' | 'success';
@@ -11,87 +13,12 @@ interface FormErrors {
   phone?: string;
 }
 
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.5 2.8.7a2 2 0 0 1 1.7 2Z" />
-    </svg>
-  );
-}
-
-function PinIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </svg>
-  );
-}
-
-function MailIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-10 6L2 7" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m4 12.5 5.5 5.5L20 7" />
-    </svg>
-  );
-}
-
-function MaxIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M4 20V5h3.2L12 13l4.8-8H20v15h-3v-9.3L13.4 18h-2.8L7 10.7V20H4Z" />
-    </svg>
-  );
-}
-
-function TelegramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M21.9 4.6 19 18.4c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6L18.6 6c.4-.3-.1-.5-.6-.2L7.7 12.4l-4.4-1.4c-1-.3-1-1 .2-1.4l17-6.5c.8-.3 1.5.2 1.4 1.5Z" />
-    </svg>
-  );
-}
-
-function VkIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.8 17.5c-5.6 0-8.8-3.9-9-10.2h2.9c.1 4.7 2.2 6.7 3.8 7.1V7.3h2.7v4.1c1.6-.2 3.3-2 3.9-4.1h2.7a7.9 7.9 0 0 1-3.6 5.1 8.2 8.2 0 0 1 4.2 5.1h-3a4.9 4.9 0 0 0-4.2-3.5v3.5h-.4Z" />
-    </svg>
-  );
-}
-
-const SOCIAL_ICONS: Record<string, () => React.ReactElement> = {
-  max: MaxIcon,
-  telegram: TelegramIcon,
-  vk: VkIcon,
-};
-
 export default function Contacts() {
-  const { ref: infoRef, inView: infoInView } = useInView<HTMLDivElement>();
-  const { ref: formRef, inView: formInView } = useInView<HTMLFormElement>();
   const [form, setForm] = useState({ name: '', phone: '', service: serviceOptions[0], message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<FormStatus>('idle');
 
-  const update = (field: keyof typeof form) => (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const update = (field: keyof typeof form) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [field]: event.target.value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
@@ -112,177 +39,192 @@ export default function Contacts() {
     setStatus('idle');
   };
 
+  const items = [
+    { icon: <PhoneIcon />, label: 'Телефон', value: contacts.phone, extra: 'Звонки и мессенджеры', href: contacts.phoneHref },
+    { icon: <PinIcon />, label: 'Адрес мастерской', value: contacts.address, extra: contacts.addressExtra },
+    { icon: <ClockIcon />, label: 'Режим работы', value: contacts.hours, extra: contacts.hoursExtra },
+    { icon: <MailIcon />, label: 'Почта', value: contacts.email, href: `mailto:${contacts.email}` },
+  ];
+
   return (
     <section className="contacts section" id="contacts">
-      <span className="contacts__watermark" aria-hidden="true">
-        Rulyozhka
-      </span>
+      <div className="contacts__glow" aria-hidden="true" />
       <div className="container">
         <div className="contacts__grid">
-          <div className={`contacts__info reveal ${infoInView ? 'is-visible' : ''}`} ref={infoRef}>
-            <p className="section-head__overline">Контакты</p>
-            <h2 className="section-head__title">Запишитесь на замер</h2>
-            <p className="contacts__lead">
-              Приезжайте в мастерскую — покажу материалы вживую и посчитаю точную смету.
-              Или отправьте фото салона в MAX или Telegram.
+          <div className="contacts__info">
+            <p className="section-head__overline">
+              <span className="section-head__index">06</span>
+              <span className="section-head__dash stitch" />
+              Контакты
             </p>
+            <h2 className="contacts__title">
+              <SplitText text="Запишитесь на замер" accent={['замер']} />
+            </h2>
+            <Reveal delay={0.15}>
+              <p className="contacts__lead">
+                Приезжайте в мастерскую — покажу материалы вживую и посчитаю точную смету.
+                Или отправьте фото салона в MAX или Telegram.
+              </p>
+            </Reveal>
 
             <div className="contacts__items">
-              <a href={contacts.phoneHref} className="contact-item">
-                <span className="contact-item__icon">
-                  <PhoneIcon />
-                </span>
-                <span>
-                  <span className="contact-item__label">Телефон</span>
-                  <span className="contact-item__value">{contacts.phone}</span>
-                  <span className="contact-item__extra">Звонки и мессенджеры</span>
-                </span>
-              </a>
-              <div className="contact-item">
-                <span className="contact-item__icon">
-                  <PinIcon />
-                </span>
-                <span>
-                  <span className="contact-item__label">Адрес мастерской</span>
-                  <span className="contact-item__value">{contacts.address}</span>
-                  <span className="contact-item__extra">{contacts.addressExtra}</span>
-                </span>
-              </div>
-              <div className="contact-item">
-                <span className="contact-item__icon">
-                  <ClockIcon />
-                </span>
-                <span>
-                  <span className="contact-item__label">Режим работы</span>
-                  <span className="contact-item__value">{contacts.hours}</span>
-                  <span className="contact-item__extra">{contacts.hoursExtra}</span>
-                </span>
-              </div>
-              <a href={`mailto:${contacts.email}`} className="contact-item">
-                <span className="contact-item__icon">
-                  <MailIcon />
-                </span>
-                <span>
-                  <span className="contact-item__label">Почта</span>
-                  <span className="contact-item__value">{contacts.email}</span>
-                </span>
-              </a>
-            </div>
-
-            <div className="contacts__socials">
-              {socials.map((social) => {
-                const Icon = SOCIAL_ICONS[social.id];
+              {items.map((item, i) => {
+                const content = (
+                  <>
+                    <span className="contact-item__icon">{item.icon}</span>
+                    <span className="contact-item__label mono">{item.label}</span>
+                    <span className="contact-item__value">{item.value}</span>
+                    {item.extra && <span className="contact-item__extra">{item.extra}</span>}
+                  </>
+                );
                 return (
-                  <a
-                    key={social.id}
-                    href={social.href}
-                    className="contacts__social"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.label}
-                  >
-                    <Icon />
-                  </a>
+                  <Reveal key={item.label} delay={0.1 + i * 0.08} y={24}>
+                    {item.href ? (
+                      <a href={item.href} className="contact-item is-link">
+                        {content}
+                      </a>
+                    ) : (
+                      <div className="contact-item">{content}</div>
+                    )}
+                  </Reveal>
                 );
               })}
             </div>
+
+            <Reveal className="contacts__socials" delay={0.3}>
+              {socials.map((social) => {
+                const Icon = SOCIAL_ICONS[social.id];
+                return (
+                  <Magnetic key={social.id} strength={0.2}>
+                    <a
+                      href={social.href}
+                      className={`contacts__social contacts__social--${social.id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Icon />
+                      {social.label}
+                    </a>
+                  </Magnetic>
+                );
+              })}
+            </Reveal>
           </div>
 
-          <form
-            className={`contacts__form reveal ${formInView ? 'is-visible' : ''}`}
-            ref={formRef}
-            onSubmit={handleSubmit}
-            noValidate
-          >
-            <h3 className="contacts__form-title">Оставить заявку</h3>
-            <p className="contacts__form-subtitle">Перезвоним в течение 15 минут в рабочее время</p>
+          <Reveal delay={0.15} y={48}>
+            <form className="contacts__form" onSubmit={handleSubmit} noValidate>
+              <h3 className="contacts__form-title">Оставить заявку</h3>
+              <p className="contacts__form-subtitle">Перезвоним в течение 15 минут в рабочее время</p>
 
-            <div className="contacts__form-row">
-              <div className="form-field">
-                <label className="form-field__label" htmlFor="contact-name">
-                  Имя *
-                </label>
-                <input
-                  id="contact-name"
-                  className={`form-field__input ${errors.name ? 'has-error' : ''}`}
-                  type="text"
-                  placeholder="Как к вам обращаться"
-                  value={form.name}
-                  onChange={update('name')}
-                />
-                {errors.name && <span className="form-field__hint">{errors.name}</span>}
+              <div className="contacts__form-row">
+                <div className="form-field">
+                  <label className="form-field__label" htmlFor="contact-name">
+                    Имя *
+                  </label>
+                  <input
+                    id="contact-name"
+                    className={`form-field__input ${errors.name ? 'has-error' : ''}`}
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Как к вам обращаться"
+                    value={form.name}
+                    onChange={update('name')}
+                    aria-invalid={!!errors.name}
+                  />
+                  {errors.name && <span className="form-field__hint">{errors.name}</span>}
+                </div>
+                <div className="form-field">
+                  <label className="form-field__label" htmlFor="contact-phone">
+                    Телефон *
+                  </label>
+                  <input
+                    id="contact-phone"
+                    className={`form-field__input ${errors.phone ? 'has-error' : ''}`}
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="+7 (___) ___-__-__"
+                    value={form.phone}
+                    onChange={update('phone')}
+                    aria-invalid={!!errors.phone}
+                  />
+                  {errors.phone && <span className="form-field__hint">{errors.phone}</span>}
+                </div>
               </div>
-              <div className="form-field">
-                <label className="form-field__label" htmlFor="contact-phone">
-                  Телефон *
-                </label>
-                <input
-                  id="contact-phone"
-                  className={`form-field__input ${errors.phone ? 'has-error' : ''}`}
-                  type="tel"
-                  placeholder="+7 (___) ___-__-__"
-                  value={form.phone}
-                  onChange={update('phone')}
-                />
-                {errors.phone && <span className="form-field__hint">{errors.phone}</span>}
-              </div>
-            </div>
 
-            <div className="form-field">
-              <label className="form-field__label" htmlFor="contact-service">
-                Что перетянуть?
-              </label>
-              <div className="form-field__select-wrap">
-                <select
-                  id="contact-service"
-                  className="form-field__select"
-                  value={form.service}
-                  onChange={update('service')}
-                >
+              <fieldset className="form-field">
+                <legend className="form-field__label">Что перетянуть?</legend>
+                <div className="form-chips">
                   {serviceOptions.map((option) => (
-                    <option key={option} value={option}>
+                    <label key={option} className={`form-chip ${form.service === option ? 'is-active' : ''}`}>
+                      <input
+                        type="radio"
+                        name="service"
+                        value={option}
+                        checked={form.service === option}
+                        onChange={update('service')}
+                      />
                       {option}
-                    </option>
+                    </label>
                   ))}
-                </select>
+                </div>
+              </fieldset>
+
+              <div className="form-field">
+                <label className="form-field__label" htmlFor="contact-message">
+                  Комментарий
+                </label>
+                <textarea
+                  id="contact-message"
+                  className="form-field__textarea"
+                  placeholder="Марка, год, пожелания по материалу…"
+                  value={form.message}
+                  onChange={update('message')}
+                />
               </div>
-            </div>
 
-            <div className="form-field">
-              <label className="form-field__label" htmlFor="contact-message">
-                Комментарий
-              </label>
-              <textarea
-                id="contact-message"
-                className="form-field__textarea"
-                placeholder="Марка, год, пожелания по материалу…"
-                value={form.message}
-                onChange={update('message')}
-              />
-            </div>
+              <button className="btn btn--solid contacts__submit" type="submit" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Отправляем…' : 'Отправить заявку'}
+              </button>
+              <p className="contacts__note">
+                Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
+              </p>
 
-            <button className="btn btn--solid contacts__submit" type="submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Отправляем…' : 'Отправить заявку'}
-            </button>
-            <p className="contacts__note">
-              Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
-            </p>
-
-            {status === 'success' && (
-              <div className="contacts__success">
-                <span className="contacts__success-icon">
-                  <CheckIcon />
-                </span>
-                <h4 className="contacts__success-title">Заявка отправлена!</h4>
-                <p className="contacts__success-text">
-                  Спасибо, {form.name}. Свяжусь с вами по номеру {form.phone} в ближайшее время.
-                </p>
-                <button type="button" className="btn btn--outline" onClick={resetForm}>
-                  Отправить ещё одну
-                </button>
-              </div>
-            )}
-          </form>
+              <AnimatePresence>
+                {status === 'success' && (
+                  <motion.div
+                    className="contacts__success"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    role="status"
+                  >
+                    <motion.span
+                      className="contacts__success-icon"
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 16, delay: 0.1 }}
+                    >
+                      <CheckIcon />
+                    </motion.span>
+                    <motion.div
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
+                    >
+                      <h4 className="contacts__success-title">Заявка отправлена!</h4>
+                      <p className="contacts__success-text">
+                        Спасибо, {form.name}. Свяжусь с вами по номеру {form.phone} в ближайшее время.
+                      </p>
+                      <button type="button" className="btn btn--ghost" onClick={resetForm}>
+                        Отправить ещё одну
+                      </button>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </form>
+          </Reveal>
         </div>
       </div>
     </section>

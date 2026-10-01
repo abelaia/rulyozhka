@@ -1,39 +1,35 @@
 .reviews {
-  background: var(--color-bg);
+  background: var(--color-bg-2);
+  overflow: hidden;
 
   &__controls {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
   }
 
   &__btn {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-border);
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: transparent;
-    color: var(--color-text-primary);
-    cursor: pointer;
+    border: 1px solid var(--color-border-strong);
     transition:
-      background-color 0.25s ease,
-      border-color 0.25s ease,
-      color 0.25s ease,
-      transform 0.25s var(--ease);
+      background-color 0.35s var(--ease),
+      border-color 0.35s var(--ease),
+      color 0.35s var(--ease),
+      transform 0.2s ease;
 
     svg {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
     }
 
     &:hover {
       background: var(--color-accent);
       border-color: var(--color-accent);
       color: var(--color-on-accent);
-      transform: translateY(-2px);
     }
 
     &:active {
@@ -42,62 +38,82 @@
   }
 
   &__counter {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 22px;
-    letter-spacing: 0.08em;
-    min-width: 78px;
+    min-width: 64px;
     text-align: center;
+    font-size: 14px;
+    color: var(--color-text-muted);
 
     em {
       font-style: normal;
-      color: var(--color-accent);
+      color: var(--color-text-primary);
     }
   }
 
-  &__viewport {
-    overflow: hidden;
-  }
-
+  // Лента выходит за контейнер справа — видно, что есть ещё отзывы
   &__track {
     display: flex;
-    transition: transform 0.55s var(--ease);
+    align-items: stretch;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 4px max(24px, calc((100vw - var(--container-width)) / 2 + 24px)) 8px;
+    scroll-padding-inline: max(24px, calc((100vw - var(--container-width)) / 2 + 24px));
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  &__slot {
-    flex: 0 0 calc(100% / 3);
+  &__progress {
+    position: relative;
+    height: 2px;
+    margin-top: 40px;
+    background: var(--color-border);
+    overflow: hidden;
+
+    span {
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+      transform-origin: 0 50%;
+      transition: transform 0.3s var(--ease);
+    }
+  }
+
+  @media (max-width: 560px) {
+    &__track {
+      gap: 14px;
+      padding-inline: 16px;
+      scroll-padding-inline: 16px;
+    }
+
+    &__btn {
+      width: 48px;
+      height: 48px;
+    }
   }
 }
 
 .review-card {
-  position: relative;
+  flex: 0 0 min(400px, calc(100vw - 48px));
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  height: 100%;
-  margin-right: 24px;
-  padding: 30px;
+  padding: 32px;
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  transition:
-    border-color 0.3s ease,
-    transform 0.3s var(--ease);
+  transition: border-color 0.4s ease, transform 0.5s var(--ease);
 
   &:hover {
-    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
-    transform: translateY(-4px);
+    border-color: rgba(255, 83, 35, 0.4);
   }
 
-  &__quote {
-    position: absolute;
-    top: 14px;
-    right: 24px;
-    font-family: var(--font-display);
-    font-size: 92px;
-    line-height: 1;
-    color: var(--color-accent);
-    opacity: 0.16;
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 
   &__stars {
@@ -106,21 +122,39 @@
     color: var(--color-accent);
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
     }
+  }
+
+  &__quote {
+    font-family: var(--font-display);
+    font-size: 72px;
+    line-height: 0.6;
+    color: var(--color-surface-3);
+  }
+
+  &__project {
+    margin: 18px 0 14px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
   &__text {
     font-size: 15px;
-    line-height: 1.68;
+    line-height: 1.7;
+    color: rgba(244, 241, 236, 0.86);
   }
 
   &__reply {
-    padding: 12px 14px;
-    border-left: 2px solid var(--color-accent);
-    background: color-mix(in srgb, var(--color-text-secondary) 7%, transparent);
-    font-size: 13.5px;
+    margin-top: 20px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border-left: 2px dashed var(--color-accent);
+    background: var(--color-bg-2);
+    font-size: 14px;
     line-height: 1.55;
     color: var(--color-text-secondary);
   }
@@ -128,65 +162,46 @@
   &__reply-label {
     display: block;
     margin-bottom: 4px;
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
+    font-size: 10px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--color-text-muted);
   }
 
   &__footer {
-    margin-top: auto;
     display: flex;
     align-items: center;
     gap: 14px;
-    border-top: 1px solid var(--color-border);
-    padding-top: 18px;
+    margin-top: auto;
+    padding-top: 24px;
   }
 
   &__avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
     width: 46px;
     height: 46px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 50%;
-    background: var(--color-text-primary);
-    color: var(--color-invert);
+    background: linear-gradient(135deg, var(--color-accent), #b8300f);
+    color: var(--color-on-accent);
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 19px;
+    font-weight: 700;
+    font-size: 17px;
   }
 
   &__name {
+    font-weight: 700;
     font-size: 15px;
-    font-weight: 800;
   }
 
-  &__car {
-    margin-top: 2px;
-    font-size: 12.5px;
-    color: var(--color-text-secondary);
+  &__date {
+    font-size: 13px;
+    color: var(--color-text-muted);
   }
 
-  @media (max-width: 1020px) {
-    padding: 26px;
-  }
-
-  @media (max-width: 640px) {
+  @media (max-width: 560px) {
+    flex-basis: calc(100vw - 48px);
     padding: 24px;
-  }
-}
-
-@media (max-width: 1020px) {
-  .reviews__slot {
-    flex-basis: 50%;
-  }
-}
-
-@media (max-width: 640px) {
-  .reviews__slot {
-    flex-basis: 100%;
   }
 }

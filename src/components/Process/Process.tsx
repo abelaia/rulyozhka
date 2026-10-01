@@ -1,48 +1,60 @@
+import { useRef, useState } from 'react';
+import { motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
+
 import { PROCESS_STEPS as steps } from '../../constants/site';
-import type { ProcessStep as ProcessStepType } from '../../constants/site';
-import { useInView } from '../../hooks';
+import { ClockIcon } from '../ui/icons';
+import { EASE, Reveal, VIEWPORT } from '../ui/motion';
+import SectionHead from '../ui/SectionHead';
 import './Process.scss';
 
 export default function Process() {
-  const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
-  const { ref: noteRef, inView: noteInView } = useInView<HTMLParagraphElement>();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [reached, setReached] = useState(0);
+
+  // Линия-«строчка» прошивается по мере прокрутки, шаги загораются по очереди
+  const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start 85%', 'end 55%'] });
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
+  useMotionValueEvent(scrollYProgress, 'change', (value) => {
+    setReached(Math.min(steps.length, Math.floor(value * steps.length + 0.35)));
+  });
 
   return (
     <section className="process section" id="process">
       <div className="container">
-        <div className={`section-head reveal ${headInView ? 'is-visible' : ''}`} ref={headRef}>
-          <div>
-            <p className="section-head__overline">Формат работы</p>
-            <h2 className="section-head__title">4 шага до нового салона</h2>
+        <SectionHead index="04" overline="Формат работы" title="4 шага до нового салона" accent={['4']} />
+
+        <div className="process__track" ref={trackRef}>
+          <div className="process__line" aria-hidden="true">
+            <motion.div className="process__line-fill" style={{ scaleX: progress }} />
+            <motion.div className="process__line-fill process__line-fill--vertical" style={{ scaleY: progress }} />
           </div>
+
+          <ol className="process__grid">
+            {steps.map((step, i) => (
+              <motion.li
+                key={step.index}
+                className={`process__step ${i < reached ? 'is-reached' : ''}`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={VIEWPORT}
+                transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
+              >
+                <span className="process__node mono">{step.index}</span>
+                <h3 className="process__step-title">{step.title}</h3>
+                <p className="process__step-text">{step.text}</p>
+              </motion.li>
+            ))}
+          </ol>
         </div>
 
-        <div className="process__grid">
-          {steps.map((step, i) => (
-            <ProcessStep key={step.index} step={step} delay={i * 90} />
-          ))}
-        </div>
-
-        <p className={`process__note reveal ${noteInView ? 'is-visible' : ''}`} ref={noteRef}>
-          Средний срок полной перетяжки салона от 5 дней.
-        </p>
+        <Reveal className="process__note">
+          <span className="process__note-icon">
+            <ClockIcon />
+          </span>
+          <p>Средний срок полной перетяжки салона от 5 дней.</p>
+        </Reveal>
       </div>
     </section>
-  );
-}
-
-function ProcessStep({ step, delay }: { step: ProcessStepType; delay: number }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-
-  return (
-    <div
-      className={`process__step reveal ${inView ? 'is-visible' : ''}`}
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      <span className="process__step-index">{step.index}</span>
-      <h3 className="process__step-title">{step.title}</h3>
-      <p className="process__step-text">{step.text}</p>
-    </div>
   );
 }

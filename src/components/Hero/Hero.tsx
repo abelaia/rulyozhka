@@ -1,5 +1,10 @@
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+
 import { IMAGES as images } from '../../constants/images';
 import { useCountUp, useInView } from '../../hooks';
+import { ArrowDownIcon, ArrowRightIcon } from '../ui/icons';
+import { EASE, Magnetic, SplitText } from '../ui/motion';
 import './Hero.scss';
 
 interface Stat {
@@ -12,14 +17,6 @@ const STATS: Stat[] = [
   { value: 7, suffix: '+', label: 'лет опыта' },
   { value: 1000, suffix: '+', label: 'выполненных работ' },
 ];
-
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  );
-}
 
 function StatItem({ stat, started }: { stat: Stat; started: boolean }) {
   const value = useCountUp(stat.value, started);
@@ -34,84 +31,115 @@ function StatItem({ stat, started }: { stat: Stat; started: boolean }) {
   );
 }
 
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay, ease: EASE },
+});
+
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
   const { ref: statsRef, inView: statsInView } = useInView<HTMLDivElement>(0.3);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+
+  // Параллакс: фото уходит медленнее контента
+  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', '22%']);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1.08, 1.2]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
   return (
-    <section className="hero" id="hero">
-      <div className="hero__media">
-        <img src={images.hero} alt="Перетянутый кожей салон автомобиля" />
-      </div>
+    <section className="hero" id="hero" ref={sectionRef}>
+      <motion.div className="hero__media" style={{ y: mediaY, scale: mediaScale }}>
+        <motion.img
+          src={images.hero}
+          alt="Перетянутый кожей салон автомобиля"
+          initial={{ opacity: 0, scale: 1.15 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.8, ease: EASE }}
+        />
+      </motion.div>
       <div className="hero__scrim" />
+      <div className="hero__glow" aria-hidden="true" />
 
-      <div className="container hero__content">
-        <p className="hero__overline">Мастер по перетяжке салонов · с 2018 года</p>
+      <motion.div className="container hero__content" style={{ y: contentY, opacity: contentOpacity }}>
+        <motion.p className="hero__overline mono" {...fadeUp(0.2)}>
+          <span className="hero__overline-dot" />
+          Мастер по перетяжке салонов · с 2018 года
+        </motion.p>
+
         <h1 className="hero__title">
           <span className="hero__title-line">
-            <span className="hero__title-inner" style={{ animationDelay: '0.1s' }}>
-              Интерьерный 
-            </span>
+            <SplitText text="Интерьерный" immediate delay={0.3} />
+          </span>
+          <span className="hero__title-line hero__title-line--accent">
+            <SplitText text="тюнинг" accent={['тюнинг']} immediate delay={0.42} />
+            <svg className="hero__stitch" viewBox="0 0 400 20" preserveAspectRatio="none" aria-hidden="true">
+              <motion.path
+                d="M2 12 C 80 4, 160 18, 240 9 S 360 6, 398 11"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.2, delay: 1.1, ease: EASE }}
+              />
+            </svg>
           </span>
           <span className="hero__title-line">
-            <span className="hero__title-inner" style={{ animationDelay: '0.2s' }}>
-              <em className="hero__title-word">
-                тюнинг
-              </em>
-            </span>
-          </span>
-          <span className="hero__title-line">
-            <span
-              className="hero__title-inner"
-              style={{ animationDelay: '0.4s' }}
-            >
-              автомобиля
-            </span>
+            <SplitText text="автомобиля" immediate delay={0.54} />
           </span>
         </h1>
-        <p className="hero__subtitle">
-          Перетяжка салонов автомобилей, мотоциклов и лодок — натуральная кожа, алькантара
-          и экокожа.
-        </p>
 
-        <div className="hero__actions">
-          <a href="#works" className="btn btn--solid">
-            Смотреть работы
-            <ArrowIcon />
-          </a>
-          <a href="#contacts" className="btn btn--light">
-            Записаться на замер
+        <motion.p className="hero__subtitle" {...fadeUp(0.9)}>
+          Перетяжка салонов автомобилей, мотоциклов и лодок — натуральная кожа, алькантара и экокожа.
+        </motion.p>
+
+        <motion.div className="hero__actions" {...fadeUp(1.05)}>
+          <Magnetic>
+            <a href="#works" className="btn btn--solid">
+              Смотреть работы
+              <ArrowRightIcon />
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href="#contacts" className="btn btn--ghost">
+              Записаться на замер
+            </a>
+          </Magnetic>
+        </motion.div>
+      </motion.div>
+
+      <motion.div className="hero__bottom" {...fadeUp(1.25)}>
+        <div className="container hero__bottom-inner">
+          <div className="hero__stats" ref={statsRef}>
+            {STATS.map((stat) => (
+              <StatItem key={stat.label} stat={stat} started={statsInView} />
+            ))}
+          </div>
+          <a href="#services" className="hero__scroll mono">
+            <span className="hero__scroll-icon">
+              <ArrowDownIcon />
+            </span>
+            Листайте вниз
           </a>
         </div>
+      </motion.div>
 
-        <div className="hero__stats" ref={statsRef}>
-          {STATS.map((stat) => (
-            <StatItem key={stat.label} stat={stat} started={statsInView} />
-          ))}
-        </div>
-      </div>
-
-      <div className="hero__badge" aria-hidden="true">
-        <svg viewBox="0 0 160 160">
+      <motion.div
+        className="hero__badge"
+        aria-hidden="true"
+        initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ duration: 1.2, delay: 0.8, ease: EASE }}
+      >
+        <svg viewBox="0 0 160 160" className="hero__badge-ring">
           <defs>
-            <path id="hero-circle" d="M80,80 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0" />
+            <path id="hero-circle" d="M80,80 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0" />
           </defs>
           <text>
-            <textPath href="#hero-circle">
-              ПЕРЕТЯЖКА · КОЖА · АЛЬКАНТАРА · ГАРАНТИЯ ·
-            </textPath>
+            <textPath href="#hero-circle" textLength="386" lengthAdjust="spacing">ПЕРЕТЯЖКА · КОЖА · АЛЬКАНТАРА · ГАРАНТИЯ ·</textPath>
           </text>
         </svg>
-        <span className="hero__badge-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2 4 20l8-4 8 4L12 2Z" />
-          </svg>
-        </span>
-      </div>
-
-      <a href="#services" className="hero__scroll">
-        <span className="hero__scroll-line" />
-        Листайте вниз
-      </a>
+        <span className="hero__badge-core">R</span>
+      </motion.div>
     </section>
   );
 }

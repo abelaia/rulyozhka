@@ -1,20 +1,14 @@
-import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { NAV_ITEMS as navItems } from '../../constants/navigation';
 import { SERVICES as services } from '../../constants/services';
 import { CONTACTS as contacts } from '../../constants/site';
+import { ArrowUpIcon } from '../ui/icons';
+import Logo from '../ui/Logo';
+import { EASE, Magnetic } from '../ui/motion';
 import './Footer.scss';
 
-function ArrowUpIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 19V5m-6 6 6-6 6 6" />
-    </svg>
-  );
-}
-
 export default function Footer() {
-  const [logoError, setLogoError] = useState(false);
   const year = new Date().getFullYear();
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -24,21 +18,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer__top">
           <div className="footer__brand">
-            <a href="#hero" className="footer__logo">
-              {logoError ? (
-                <span className="footer__logo-mark">R</span>
-              ) : (
-                <img
-                  src="/logo.png"
-                  alt="RULYOZHKA"
-                  className="footer__logo-img"
-                  onError={() => setLogoError(true)}
-                />
-              )}
-              <span className="footer__logo-text">
-                RULYOZHKA<span className="footer__logo-dot">.</span>
-              </span>
-            </a>
+            <Logo />
             <p className="footer__brand-text">
               Частная мастерская Николая: перетяжка салонов автомобилей, мотоциклов и лодок.
               Натуральная кожа, алькантара, экокожа. Кожа. Строчка. Характер.
@@ -46,7 +26,7 @@ export default function Footer() {
           </div>
 
           <div className="footer__col">
-            <p className="footer__heading">Разделы</p>
+            <p className="footer__heading mono">Разделы</p>
             <ul className="footer__list">
               {navItems.map((item) => (
                 <li key={item.path}>
@@ -57,7 +37,7 @@ export default function Footer() {
           </div>
 
           <div className="footer__col">
-            <p className="footer__heading">Услуги</p>
+            <p className="footer__heading mono">Услуги</p>
             <ul className="footer__list">
               {services.map((service) => (
                 <li key={service.id}>
@@ -68,24 +48,39 @@ export default function Footer() {
           </div>
 
           <div className="footer__col">
-            <p className="footer__heading">Контакты</p>
-            <a href={contacts.phoneHref} className="footer__contact-line">
+            <p className="footer__heading mono">Контакты</p>
+            <a href={contacts.phoneHref} className="footer__contact-line footer__contact-line--strong">
               {contacts.phone}
             </a>
-            <p className="footer__contact-line footer__contact-line--muted">{contacts.address}</p>
-            <p className="footer__contact-line footer__contact-line--muted">{contacts.hours}</p>
-            <a href={`mailto:${contacts.email}`} className="footer__contact-line">
+            <p className="footer__contact-line">{contacts.address}</p>
+            <p className="footer__contact-line">{contacts.hours}</p>
+            <a href={`mailto:${contacts.email}`} className="footer__contact-line footer__contact-line--link">
               {contacts.email}
             </a>
           </div>
         </div>
+      </div>
 
+      <div className="footer__wordmark" aria-hidden="true">
+        <motion.span
+          initial={{ y: '40%', opacity: 0 }}
+          whileInView={{ y: '0%', opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: EASE }}
+        >
+          RULYOZHKA
+        </motion.span>
+      </div>
+
+      <div className="container">
         <div className="footer__bottom">
           <p>© {year} RULYOZHKA. Все права защищены.</p>
           <p className="footer__tagline">Перетяжка салонов.</p>
-          <button type="button" className="footer__top-btn" onClick={scrollToTop} aria-label="Наверх">
-            <ArrowUpIcon />
-          </button>
+          <Magnetic>
+            <button type="button" className="footer__top-btn" onClick={scrollToTop} aria-label="Наверх">
+              <ArrowUpIcon />
+            </button>
+          </Magnetic>
         </div>
       </div>
     </footer>

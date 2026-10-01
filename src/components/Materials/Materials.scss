@@ -1,122 +1,242 @@
 .materials {
-  background: var(--color-surface);
-  border-block: 1px solid var(--color-border);
+  background: var(--color-bg-2);
 
-  &__grid {
+  &__layout {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
+    grid-template-columns: minmax(320px, 0.85fr) 1.15fr;
+    gap: 24px;
+    align-items: stretch;
   }
 
-  @media (max-width: 1100px) {
-    &__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  &__tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  @media (max-width: 640px) {
-    &__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-}
-
-.material-card {
-  grid-column: span 3;
-  display: flex;
-  flex-direction: column;
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition:
-    transform 0.35s var(--ease),
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
-
-  &:hover {
-    transform: translateY(-6px);
-    border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
-    box-shadow: var(--shadow-card);
-
-    .material-card__swatch img {
-      transform: scale(1.07);
-    }
-  }
-
-  &__swatch {
+  &__tab {
     position: relative;
-    height: 190px;
+    display: grid;
+    grid-template-columns: 36px 1fr 64px;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 20px 20px 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    text-align: left;
+    isolation: isolate;
+    flex: 1;
+    transition: border-color 0.4s ease;
+
+    &:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    &.is-active {
+      border-color: rgba(255, 83, 35, 0.5);
+    }
+  }
+
+  &__tab-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(255, 83, 35, 0.14), var(--color-surface) 60%);
+  }
+
+  &__tab-index {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    transition: color 0.3s ease;
+  }
+
+  &__tab.is-active &__tab-index {
+    color: var(--color-accent);
+  }
+
+  &__tab-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__tab-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+  }
+
+  &__tab-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  &__tab-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
     overflow: hidden;
+    opacity: 0.55;
+    transform: scale(0.9);
+    transition: opacity 0.4s ease, transform 0.5s var(--ease);
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s var(--ease);
     }
+  }
+
+  &__tab.is-active &__tab-thumb {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__panel {
+    position: relative;
+    min-height: 560px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface);
+
+    // Пунктирная «строчка» по периметру
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 14px;
+      border-radius: calc(var(--radius-lg) - 10px);
+      border: 1.5px dashed rgba(244, 241, 236, 0.28);
+      pointer-events: none;
+    }
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12, 12, 14, 0.92) 0%, rgba(12, 12, 14, 0.2) 50%, transparent 70%);
   }
 
   &__badge {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 2;
-    padding: 6px 10px;
-    background: rgba(10, 10, 12, 0.75);
-    color: #f2f2f0;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border-radius: 2px;
+    top: 32px;
+    left: 32px;
+    border-color: rgba(255, 83, 35, 0.5);
+    color: var(--color-accent);
   }
 
-  &__body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 22px;
+  &__info {
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    bottom: 32px;
   }
 
   &__title {
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-
-  &__subtitle {
-    margin-top: 6px;
-    font-size: 13.5px;
-    color: var(--color-text-secondary);
+    font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 46px);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 20px;
   }
 
   &__features {
-    margin-top: auto;
-    display: grid;
-    gap: 8px;
-    border-top: 1px solid var(--color-border);
-    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     li {
       display: flex;
-      gap: 10px;
-      font-size: 13.5px;
-      color: var(--color-text-secondary);
-
-      &::before {
-        content: '—';
-        color: var(--color-accent);
-        flex-shrink: 0;
-      }
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(244, 241, 236, 0.86);
+      max-width: 520px;
     }
   }
 
-  @media (max-width: 1100px) {
-    grid-column: span 1;
+  &__check {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    &__layout {
+      grid-template-columns: 1fr;
+    }
+
+    &__tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      margin: 0 -24px;
+      padding: 0 24px;
+      scroll-padding-inline: 24px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__tab {
+      flex: 0 0 auto;
+      grid-template-columns: auto 1fr;
+      scroll-snap-align: start;
+      padding: 16px 20px;
+    }
+
+    &__tab-thumb {
+      display: none;
+    }
+
+    &__panel {
+      min-height: 480px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    &__tabs {
+      margin: 0 -16px;
+      padding: 0 16px;
+      scroll-padding-inline: 16px;
+    }
+
+    &__panel {
+      min-height: 440px;
+    }
+
+    &__badge {
+      top: 26px;
+      left: 26px;
+    }
+
+    &__info {
+      left: 26px;
+      right: 26px;
+      bottom: 28px;
+    }
   }
 }

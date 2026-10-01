@@ -1,3 +1,5 @@
+import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
+
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Marquee from './components/Marquee/Marquee';
@@ -10,8 +12,13 @@ import Contacts from './components/Contacts/Contacts';
 import Footer from './components/Footer/Footer';
 
 export default function App() {
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30 });
+
   return (
-    <>
+    // reducedMotion="user" — анимации отключаются, если они выключены в системе
+    <MotionConfig reducedMotion="user">
+      <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <Header />
       <main>
         <Hero />
@@ -24,6 +31,6 @@ export default function App() {
         <Contacts />
       </main>
       <Footer />
-    </>
+    </MotionConfig>
   );
 }

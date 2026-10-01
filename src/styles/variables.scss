@@ -1,33 +1,30 @@
 :root {
-  --color-bg: #f2f2f0;
-  --color-surface: #fbfbf9;
-  --color-surface-2: #e7e7e4;
-  --color-text-primary: #131316;
-  --color-text-secondary: #5d5d66;
-  --color-accent: #d40000;
-  --color-accent-hover: #a80000;
-  --color-on-accent: #f7f7f4;
-  --color-border: #d9d9dd;
-  --color-invert: #f2f2f0;
-  --shadow-card: 0 18px 44px rgba(19, 19, 22, 0.12);
-  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
-  --font-body: 'Manrope', 'Segoe UI', sans-serif;
-  --header-height: 78px;
-  --container-width: 1240px;
-  --radius: 4px;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
+  // Графит + сигнальный оранжево-красный — как контрастная строчка на тёмной коже
+  --color-bg: #0c0c0e;
+  --color-bg-2: #101013;
+  --color-surface: #151518;
+  --color-surface-2: #1c1c20;
+  --color-surface-3: #25252a;
+  --color-text-primary: #f4f1ec;
+  --color-text-secondary: #a6a29b;
+  --color-text-muted: #6f6c67;
+  --color-accent: #ff5323;
+  --color-accent-hover: #ff7146;
+  --color-accent-soft: rgba(255, 83, 35, 0.12);
+  --color-accent-glow: rgba(255, 83, 35, 0.35);
+  --color-on-accent: #0c0c0e;
+  --color-border: rgba(244, 241, 236, 0.08);
+  --color-border-strong: rgba(244, 241, 236, 0.16);
 
-.dark-theme {
-  --color-bg: #0b0b0d;
-  --color-surface: #141418;
-  --color-surface-2: #1c1c22;
-  --color-text-primary: #f2f2ef;
-  --color-text-secondary: #9b9ba6;
-  --color-accent: #e10600;
-  --color-accent-hover: #ff2a1f;
-  --color-on-accent: #f7f7f4;
-  --color-border: #26262d;
-  --color-invert: #0b0b0d;
-  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.45);
+  --font-display: 'Unbounded', 'Arial Black', sans-serif;
+  --font-body: 'Manrope', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', monospace;
+
+  --header-height: 80px;
+  --container-width: 1280px;
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-lg: 28px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
