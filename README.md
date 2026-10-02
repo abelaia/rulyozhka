@@ -1,1 +1,2 @@
-# rulyozhka_qwen_fin
+# rulyozhka
+https://abelaia.github.io/rulyozhka/
