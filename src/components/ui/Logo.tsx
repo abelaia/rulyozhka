@@ -1,19 +1,29 @@
-import { useState } from 'react';
-
 import './Logo.scss';
 
-export default function Logo({ onClick }: { onClick?: () => void }) {
-  const [logoError, setLogoError] = useState(false);
-
+export function LogoMark({ className = '' }: { className?: string }) {
   return (
-    <a href="#hero" className="logo" onClick={onClick} aria-label="RULYOZHKA — на главную">
-      {logoError ? (
-        <span className="logo__mark">R</span>
-      ) : (
-        <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="logo__img" onError={() => setLogoError(true)} />
-      )}
-      <span className="logo__text">
-        RULYOZHKA<span className="logo__dot">.</span>
+    <svg className={`logo-mark ${className}`} viewBox="0 0 54 34" aria-hidden="true">
+      <path className="logo-mark__red" d="M10 0h12L12 34H0z" />
+      <path className="logo-mark__red" d="M26 0h12L28 34H16z" opacity="0.7" />
+      <path d="M42 0h12L44 34H32z" fill="currentColor" />
+    </svg>
+  );
+}
+
+export default function Logo({ onClick }: { onClick?: () => void }) {
+  return (
+    <a href="#hero" className="logo" onClick={onClick} aria-label="РУЛЁЖКА — на главную">
+      <LogoMark className="logo__mark" />
+      <span className="logo__body" aria-hidden="true">
+        <span className="logo__text">
+          РУЛ
+          <span className="logo__yo">
+            Е<i />
+            <i />
+          </span>
+          ЖКА
+        </span>
+        <span className="logo__sub">ТЮНИНГ-АТЕЛЬЕ</span>
       </span>
     </a>
   );

@@ -20,7 +20,7 @@
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: linear-gradient(90deg, var(--color-accent-soft), rgba(255, 83, 35, 0.02) 70%);
+      background: linear-gradient(90deg, var(--color-accent-soft), rgba(227, 20, 27, 0.02) 70%);
       transform: scaleX(0);
       transform-origin: 0 50%;
       transition: transform 0.6s var(--ease);
@@ -136,7 +136,7 @@
     margin-top: 48px;
     padding: 28px 32px;
     border-radius: var(--radius);
-    border: 1.5px dashed rgba(255, 83, 35, 0.4);
+    border: 1.5px dashed rgba(227, 20, 27, 0.4);
     background: var(--color-bg-2);
 
     p {

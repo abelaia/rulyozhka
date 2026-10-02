@@ -266,6 +266,7 @@ ol {
     }
 
     &:hover {
+      color: var(--color-bg);
       box-shadow: 0 16px 40px var(--color-accent-glow);
     }
   }
@@ -281,7 +282,7 @@ ol {
     }
 
     &:hover {
-      color: var(--color-on-accent);
+      color: var(--color-bg);
       border-color: var(--color-text-primary);
     }
   }

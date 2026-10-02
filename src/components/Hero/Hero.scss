@@ -40,7 +40,7 @@
     left: -260px;
     bottom: -380px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 83, 35, 0.22), transparent 65%);
+    background: radial-gradient(circle, rgba(227, 20, 27, 0.22), transparent 65%);
     filter: blur(20px);
     pointer-events: none;
   }
@@ -246,7 +246,7 @@
     font-family: var(--font-display);
     font-weight: 800;
     font-size: 28px;
-    box-shadow: 0 0 0 10px rgba(255, 83, 35, 0.14), 0 20px 50px var(--color-accent-glow);
+    box-shadow: 0 0 0 10px rgba(227, 20, 27, 0.14), 0 20px 50px var(--color-accent-glow);
   }
 
   @media (max-width: 1020px) {

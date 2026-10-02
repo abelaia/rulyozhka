@@ -107,7 +107,7 @@
   transition: border-color 0.4s ease, transform 0.5s var(--ease);
 
   &:hover {
-    border-color: rgba(255, 83, 35, 0.4);
+    border-color: rgba(227, 20, 27, 0.4);
   }
 
   &__head {
@@ -183,7 +183,7 @@
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent), #b8300f);
+    background: linear-gradient(135deg, var(--color-accent), #8c0a10);
     color: var(--color-on-accent);
     font-family: var(--font-display);
     font-weight: 700;
