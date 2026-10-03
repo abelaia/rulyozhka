@@ -102,7 +102,12 @@ export const VkIcon = () => (
   </svg>
 );
 
-export const SOCIAL_ICONS: Record<string, () => ReactElement> = {
+/** Иконки по id из данных: контакты и соцсети */
+export const ICONS: Record<string, () => ReactElement> = {
+  phone: PhoneIcon,
+  address: PinIcon,
+  hours: ClockIcon,
+  email: MailIcon,
   max: MaxIcon,
   telegram: TelegramIcon,
   vk: VkIcon,

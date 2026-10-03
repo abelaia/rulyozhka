@@ -1,35 +1,21 @@
+@use '../../styles/mixins' as *;
+
 .reviews {
   background: var(--color-bg-2);
   overflow: hidden;
 
   &__controls {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    @include flex-center(16px);
   }
 
   &__btn {
-    display: grid;
-    place-items: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 1px solid var(--color-border-strong);
-    transition:
-      background-color 0.35s var(--ease),
-      border-color 0.35s var(--ease),
-      color 0.35s var(--ease),
-      transform 0.2s ease;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
+    border: var(--border-strong);
+    @include transition((background-color, border-color, color));
+    @include circle(56px, 20px);
 
     &:hover {
-      background: var(--color-accent);
+      @include accent-fill;
       border-color: var(--color-accent);
-      color: var(--color-on-accent);
     }
 
     &:active {
@@ -40,7 +26,7 @@
   &__counter {
     min-width: 64px;
     text-align: center;
-    font-size: 14px;
+    font-size: var(--fs-ui);
     color: var(--color-text-muted);
 
     em {
@@ -54,15 +40,8 @@
     display: flex;
     align-items: stretch;
     gap: 24px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    padding: 4px max(24px, calc((100vw - var(--container-width)) / 2 + 24px)) 8px;
-    scroll-padding-inline: max(24px, calc((100vw - var(--container-width)) / 2 + 24px));
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    padding: 4px var(--edge) 8px;
+    @include snap-row(var(--edge));
   }
 
   &__progress {
@@ -73,19 +52,16 @@
     overflow: hidden;
 
     span {
-      position: absolute;
-      inset: 0;
+      @include fill;
       background: var(--color-accent);
       transform-origin: 0 50%;
-      transition: transform 0.3s var(--ease);
+      transition: transform var(--dur-sm) var(--ease);
     }
   }
 
-  @media (max-width: 560px) {
+  @include bp(xxs) {
     &__track {
       gap: 14px;
-      padding-inline: 16px;
-      scroll-padding-inline: 16px;
     }
 
     &__btn {
@@ -98,16 +74,13 @@
 .review-card {
   flex: 0 0 min(400px, calc(100vw - 48px));
   scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
+  @include column;
   padding: 32px;
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  transition: border-color 0.4s ease, transform 0.5s var(--ease);
+  @include card(var(--radius-lg));
+  transition: border-color var(--dur-md) ease;
 
   &:hover {
-    border-color: rgba(227, 20, 27, 0.4);
+    border-color: var(--color-accent-border);
   }
 
   &__head {
@@ -120,11 +93,7 @@
     display: flex;
     gap: 4px;
     color: var(--color-accent);
-
-    svg {
-      width: 17px;
-      height: 17px;
-    }
+    @include icon(17px);
   }
 
   &__quote {
@@ -136,16 +105,13 @@
 
   &__project {
     margin: 18px 0 14px;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent);
+    @include caps(var(--fs-caption), var(--tracking-label), var(--color-accent));
   }
 
   &__text {
-    font-size: 15px;
+    font-size: var(--fs-body);
     line-height: 1.7;
-    color: rgba(244, 241, 236, 0.86);
+    color: var(--color-text-on-media);
   }
 
   &__reply {
@@ -154,7 +120,7 @@
     border-radius: var(--radius-sm);
     border-left: 2px dashed var(--color-accent);
     background: var(--color-bg-2);
-    font-size: 14px;
+    font-size: var(--fs-ui);
     line-height: 1.55;
     color: var(--color-text-secondary);
   }
@@ -162,45 +128,33 @@
   &__reply-label {
     display: block;
     margin-bottom: 4px;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
+    @include caps(var(--fs-micro), var(--tracking-wider));
   }
 
   &__footer {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    @include flex-center(14px);
     margin-top: auto;
     padding-top: 24px;
   }
 
   &__avatar {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent), #8c0a10);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
     color: var(--color-on-accent);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 17px;
+    @include display(var(--fs-lead), 700, normal);
+    @include circle(46px);
   }
 
   &__name {
     font-weight: 700;
-    font-size: 15px;
+    font-size: var(--fs-body);
   }
 
   &__date {
-    font-size: 13px;
+    font-size: var(--fs-small);
     color: var(--color-text-muted);
   }
 
-  @media (max-width: 560px) {
+  @include bp(xxs) {
     flex-basis: calc(100vw - 48px);
     padding: 24px;
   }

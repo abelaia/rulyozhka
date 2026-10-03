@@ -1,0 +1,58 @@
+{
+  "categories": [
+    "Все",
+    "Авто",
+    "Мото",
+    "Лодки"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "title": "BMW 5 G30",
+      "category": "Авто",
+      "material": "Nappa + алькантара",
+      "time": "5 дней",
+      "image": "https://image.qwenlm.ai/generated-images/2ea0bd2d-a32f-4706-92e7-53a023bf8a77/_result.png"
+    },
+    {
+      "id": 2,
+      "title": "Ducati Streetfighter",
+      "category": "Мото",
+      "material": "Перфорированная кожа",
+      "time": "2 дня",
+      "image": "https://image.qwenlm.ai/generated-images/f8cf8220-a8ff-4f74-95e7-28530e9ce9ba/_result.png"
+    },
+    {
+      "id": 3,
+      "title": "Катер Silver 550",
+      "category": "Лодки",
+      "material": "Морской винил",
+      "time": "7 дней",
+      "image": "https://image.qwenlm.ai/generated-images/4669209c-817f-4e6c-b665-ecbf45083d9c/_result.png"
+    },
+    {
+      "id": 4,
+      "title": "Mercedes G-Class",
+      "category": "Авто",
+      "material": "Кожа Designo, ромб",
+      "time": "6 дней",
+      "image": "https://image.qwenlm.ai/generated-images/00528c82-32e9-4e51-99dd-22860f5a5de4/_result.png"
+    },
+    {
+      "id": 5,
+      "title": "Alcantara Package",
+      "category": "Авто",
+      "material": "Потолок + стойки",
+      "time": "1 день",
+      "image": "https://image.qwenlm.ai/generated-images/e31199c3-5e87-49df-9ec6-836d847bead5/_result.png"
+    },
+    {
+      "id": 6,
+      "title": "Yamaha WaveRunner",
+      "category": "Лодки",
+      "material": "Антискользящий винил",
+      "time": "3 дня",
+      "image": "https://image.qwenlm.ai/generated-images/8b16ea4d-a73a-4ea3-9b5f-9c88ed10d9d4/_result.png"
+    }
+  ]
+}

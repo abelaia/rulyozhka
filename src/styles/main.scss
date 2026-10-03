@@ -1,3 +1,5 @@
+@use 'mixins' as *;
+
 *,
 *::before,
 *::after {
@@ -16,7 +18,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: var(--fs-base);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -63,8 +65,7 @@ ol {
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-on-accent);
+  @include accent-fill;
 }
 
 ::-webkit-scrollbar {
@@ -87,18 +88,14 @@ ol {
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 24px;
-
-  @media (max-width: 560px) {
-    padding: 0 16px;
-  }
+  padding: 0 var(--gutter);
 }
 
 .section {
   position: relative;
   padding: 128px 0;
 
-  @media (max-width: 768px) {
+  @include bp(sm) {
     padding: 80px 0;
   }
 }
@@ -110,7 +107,7 @@ ol {
 // Фирменный элемент — пунктирная «строчка»
 .stitch {
   height: 2px;
-  background: repeating-linear-gradient(90deg, var(--color-accent) 0 10px, transparent 10px 18px);
+  @include stitch;
   background-size: 18px 2px;
 }
 
@@ -136,15 +133,10 @@ ol {
   margin-bottom: 64px;
 
   &__overline {
+    @include flex-center(14px);
     display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    font-family: var(--font-mono);
-    font-size: 12px;
+    @include caps(var(--fs-label), var(--tracking-widest), var(--color-text-secondary));
     font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
     margin-bottom: 22px;
   }
 
@@ -157,22 +149,19 @@ ol {
   }
 
   &__title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(34px, 5vw, 68px);
+    @include display(var(--fs-h2), 600, var(--tracking-tighter));
     line-height: 1.02;
-    letter-spacing: -0.03em;
     max-width: 14ch;
   }
 
   &__note {
     max-width: 340px;
-    font-size: 16px;
+    font-size: var(--fs-base);
     line-height: 1.65;
     color: var(--color-text-secondary);
   }
 
-  @media (max-width: 860px) {
+  @include bp(md) {
     grid-template-columns: 1fr;
     margin-bottom: 44px;
   }
@@ -205,111 +194,127 @@ ol {
 
 .btn {
   position: relative;
+  @include flex-center(12px);
   display: inline-flex;
-  align-items: center;
   justify-content: center;
-  gap: 12px;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.01em;
+  font-size: var(--fs-body);
+  letter-spacing: var(--tracking-normal);
   padding: 17px 30px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1.5px solid transparent;
   cursor: pointer;
+  white-space: nowrap;
   overflow: hidden;
   isolation: isolate;
-  white-space: nowrap;
-  transition:
-    color 0.35s var(--ease),
-    border-color 0.35s var(--ease),
-    box-shadow 0.35s var(--ease),
-    background-color 0.35s var(--ease);
-
-  svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    transition: transform 0.35s var(--ease);
-  }
-
-  &:hover svg {
-    transform: translateX(4px);
-  }
-
-  // Заливка «поднимается» снизу при наведении
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    transform: translateY(101%);
-    transition: transform 0.45s var(--ease);
-  }
-
-  &:hover::before {
-    transform: none;
-  }
+  @include transition((color, border-color, box-shadow, background-color), var(--dur-md));
 
   &:disabled {
     opacity: 0.6;
     cursor: progress;
   }
 
+  // Основная: объёмный красный градиент, блик сверху, мягкая тень
   &--solid {
-    background: var(--color-accent);
+    background: var(--gradient-btn);
     color: var(--color-on-accent);
+    box-shadow: var(--shadow-btn);
 
+    // Слой яркого градиента — плавно проявляется при наведении
     &::before {
-      background: var(--color-text-primary);
+      content: '';
+      @include fill(-1);
+      background: var(--gradient-btn-hover);
+      opacity: 0;
+      transition: opacity var(--dur-md) var(--ease);
     }
 
-    &:hover {
-      color: var(--color-bg);
-      box-shadow: 0 16px 40px var(--color-accent-glow);
+    // Световой блик пробегает по кнопке один раз при наведении
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -60%;
+      width: 40%;
+      background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-20deg) translateX(0);
+      pointer-events: none;
+    }
+
+    &:hover:not(:disabled) {
+      box-shadow: var(--shadow-btn-hover);
+
+      &::before {
+        opacity: 1;
+      }
+
+      &::after {
+        transform: skewX(-20deg) translateX(420%);
+        transition: transform 0.8s var(--ease);
+      }
+    }
+
+    &:active:not(:disabled) {
+      box-shadow: var(--shadow-btn);
+      filter: brightness(0.92);
     }
   }
 
+  // Контурная: тёмное стекло, при наведении — красная рамка и ореол
   &--ghost {
-    background: rgba(244, 241, 236, 0.04);
+    @include glass(rgba(var(--rgb-light), 0.04));
     border-color: var(--color-border-strong);
     color: var(--color-text-primary);
-    backdrop-filter: blur(10px);
 
-    &::before {
-      background: var(--color-text-primary);
+    &:hover:not(:disabled) {
+      @include ghost-hover;
     }
 
-    &:hover {
-      color: var(--color-bg);
-      border-color: var(--color-text-primary);
+    &:active:not(:disabled) {
+      background: rgba(var(--rgb-accent), 0.2);
     }
   }
 
   &--sm {
     padding: 12px 22px;
-    font-size: 14px;
+    font-size: var(--fs-ui);
+  }
+
+  // Стрелка в круглом бейдже справа от текста
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin: -6px -14px -6px 2px;
+    border-radius: var(--radius-round);
+    background: rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+    @include icon(16px);
+
+    svg {
+      transition: transform var(--dur-lg) var(--ease);
+    }
+  }
+
+  &:hover &__icon svg {
+    transform: translateX(3px);
   }
 }
 
 /* ---------- Chips ---------- */
 
 .chip {
+  @include flex-center(8px);
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
   padding: 7px 14px;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  border-radius: var(--radius-pill);
+  @include caps(var(--fs-caption), var(--tracking-caps), var(--color-text-primary));
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: rgba(12, 12, 14, 0.6);
-  border: 1px solid var(--color-border-strong);
-  color: var(--color-text-primary);
-  backdrop-filter: blur(10px);
+  @include glass;
+  border: var(--border-strong);
 }
 
 @media (prefers-reduced-motion: reduce) {

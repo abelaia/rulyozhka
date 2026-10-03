@@ -1,5 +1,6 @@
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 
+import { PROGRESS_SPRING } from './animations';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Marquee from './components/Marquee/Marquee';
@@ -13,7 +14,7 @@ import Footer from './components/Footer/Footer';
 
 export default function App() {
   const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30 });
+  const progress = useSpring(scrollYProgress, PROGRESS_SPRING);
 
   return (
     // reducedMotion="user" — анимации отключаются, если они выключены в системе

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "leather",
+    "title": "Натуральная кожа",
+    "subtitle": "Премиум-класс",
+    "badge": "Премиум",
+    "image": "https://images.pexels.com/photos/13172273/pexels-photo-13172273.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "features": [
+      "Срок службы 10+ лет",
+      "Nappa, Madras, Dakota, BMW, Mersedes и другие виды оригинальных фактур"
+    ]
+  },
+  {
+    "id": "alcantara",
+    "title": "Алькантара",
+    "subtitle": "Оригинальный материал",
+    "badge": "Спорт",
+    "image": "https://images.pexels.com/photos/35993311/pexels-photo-35993311.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "features": [
+      "Не скользит и не бликует",
+      "Мягкая и комфортная"
+    ]
+  },
+  {
+    "id": "ecoleather",
+    "title": "Экокожа",
+    "subtitle": "Баланс цены и качества",
+    "badge": "Практика",
+    "image": "https://images.pexels.com/photos/6045356/pexels-photo-6045356.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "features": [
+      "Неотличима от натуральной",
+      "Не боится влаги и мороза"
+    ]
+  },
+  {
+    "id": "marine",
+    "title": "Морской винил",
+    "subtitle": "Для лодок и катеров",
+    "badge": "Влагостойкий",
+    "image": "https://images.pexels.com/photos/17859032/pexels-photo-17859032.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "features": [
+      "Устойчив к воде и соли",
+      "Не выцветает на солнце"
+    ]
+  }
+]

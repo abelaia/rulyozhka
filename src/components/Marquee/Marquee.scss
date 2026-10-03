@@ -1,3 +1,7 @@
+@use '../../styles/mixins' as *;
+
+$tilt: 2.5deg;
+
 // Две перекрещенные ленты — как гоночные полосы
 .marquee {
   position: relative;
@@ -14,17 +18,16 @@
     overflow: hidden;
 
     &--dark {
-      transform: rotate(2.5deg);
+      transform: rotate($tilt);
       background: var(--color-surface-2);
-      border-block: 1px solid var(--color-border);
+      border-block: var(--border);
       color: var(--color-text-secondary);
     }
 
     &--accent {
-      transform: rotate(-2.5deg);
-      background: var(--color-accent);
-      color: var(--color-on-accent);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transform: rotate(-$tilt);
+      @include accent-fill;
+      box-shadow: var(--shadow-tape);
     }
   }
 
@@ -44,14 +47,10 @@
   }
 
   &__item {
+    @include flex-center(36px);
     display: inline-flex;
-    align-items: center;
-    gap: 36px;
     padding-right: 36px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(20px, 2.4vw, 30px);
-    letter-spacing: -0.02em;
+    @include display(var(--fs-tape), 700);
     white-space: nowrap;
   }
 
@@ -60,7 +59,7 @@
     opacity: 0.7;
   }
 
-  @media (max-width: 640px) {
+  @include bp(xs) {
     height: 160px;
 
     &__tape {

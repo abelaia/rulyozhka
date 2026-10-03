@@ -1,3 +1,9 @@
+@use '../../styles/mixins' as *;
+
+$node: 58px;
+$columns: 4;
+$column-gap: 32px;
+
 .process {
   &__track {
     position: relative;
@@ -6,18 +12,17 @@
   &__line {
     position: absolute;
     top: 28px;
-    left: 29px;
+    left: $node * 0.5;
     // Заканчивается в центре последнего кружка: ширина колонки минус половина кружка
-    right: calc((100% - 96px) / 4 - 29px);
+    right: calc((100% - #{$column-gap * ($columns - 1)}) / #{$columns} - #{$node * 0.5});
     height: 2px;
-    background: repeating-linear-gradient(90deg, var(--color-border-strong) 0 10px, transparent 10px 18px);
+    @include stitch(90deg, var(--color-border-strong));
   }
 
   &__line-fill {
-    position: absolute;
-    inset: 0;
+    @include fill;
     transform-origin: 0 50%;
-    background: repeating-linear-gradient(90deg, var(--color-accent) 0 10px, transparent 10px 18px);
+    @include stitch;
     filter: drop-shadow(0 0 6px var(--color-accent-glow));
 
     &--vertical {
@@ -28,90 +33,60 @@
   &__grid {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
+    grid-template-columns: repeat($columns, 1fr);
+    gap: $column-gap;
   }
 
   &__node {
-    display: grid;
-    place-items: center;
-    width: 58px;
-    height: 58px;
     margin-bottom: 32px;
-    border-radius: 50%;
     border: 1.5px solid var(--color-border-strong);
     background: var(--color-bg);
-    font-size: 14px;
+    font-size: var(--fs-ui);
     color: var(--color-text-secondary);
-    transition:
-      background-color 0.5s var(--ease),
-      border-color 0.5s var(--ease),
-      color 0.5s var(--ease),
-      box-shadow 0.5s var(--ease),
-      transform 0.5s var(--ease);
+    @include transition((background-color, border-color, color, box-shadow, transform), var(--dur-lg));
+    @include circle($node);
   }
 
   &__step.is-reached &__node {
-    background: var(--color-accent);
+    @include accent-fill;
     border-color: var(--color-accent);
-    color: var(--color-on-accent);
-    box-shadow: 0 0 0 8px rgba(227, 20, 27, 0.12);
+    box-shadow: 0 0 0 8px var(--color-accent-soft);
     transform: scale(1.05);
   }
 
   &__step-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 21px;
-    letter-spacing: -0.02em;
+    @include display(var(--fs-h5));
     line-height: 1.2;
     margin-bottom: 14px;
   }
 
   &__step-text {
-    font-size: 15px;
+    font-size: var(--fs-body);
     line-height: 1.65;
     color: var(--color-text-secondary);
   }
 
   &__note {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+    @include flex-center(20px);
     margin-top: 72px;
     padding: 28px 32px;
-    border-radius: var(--radius);
+    @include card;
     background:
-      radial-gradient(120% 200% at 0% 50%, rgba(227, 20, 27, 0.16), transparent 55%),
+      radial-gradient(120% 200% at 0% 50%, rgba(var(--rgb-accent), 0.16), transparent 55%),
       var(--color-surface);
-    border: 1px solid var(--color-border);
 
     p {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: clamp(17px, 2vw, 24px);
-      letter-spacing: -0.02em;
+      @include display(var(--fs-note), 500);
       line-height: 1.3;
     }
   }
 
   &__note-icon {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    color: var(--color-on-accent);
-
-    svg {
-      width: 26px;
-      height: 26px;
-    }
+    @include accent-fill;
+    @include circle(56px, 26px);
   }
 
-  @media (max-width: 960px) {
+  @include bp(md) {
     &__line {
       top: 0;
       bottom: 0;
@@ -119,7 +94,7 @@
       right: auto;
       width: 2px;
       height: auto;
-      background: repeating-linear-gradient(180deg, var(--color-border-strong) 0 10px, transparent 10px 18px);
+      @include stitch(180deg, var(--color-border-strong));
     }
 
     &__line-fill {
@@ -128,7 +103,7 @@
       &--vertical {
         display: block;
         transform-origin: 50% 0;
-        background: repeating-linear-gradient(180deg, var(--color-accent) 0 10px, transparent 10px 18px);
+        @include stitch(180deg);
       }
     }
 
@@ -139,7 +114,7 @@
 
     &__step {
       display: grid;
-      grid-template-columns: 58px 1fr;
+      grid-template-columns: $node 1fr;
       column-gap: 24px;
     }
 
@@ -153,7 +128,7 @@
     }
   }
 
-  @media (max-width: 560px) {
+  @include bp(xxs) {
     &__note {
       flex-direction: column;
       align-items: flex-start;

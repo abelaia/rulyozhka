@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Главная",
+    "path": "#hero"
+  },
+  {
+    "name": "Услуги",
+    "path": "#services"
+  },
+  {
+    "name": "Материалы",
+    "path": "#materials"
+  },
+  {
+    "name": "Работы",
+    "path": "#works"
+  },
+  {
+    "name": "Отзывы",
+    "path": "#reviews"
+  },
+  {
+    "name": "Контакты",
+    "path": "#contacts"
+  }
+]

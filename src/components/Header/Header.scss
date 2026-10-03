@@ -1,3 +1,5 @@
+@use '../../styles/mixins' as *;
+
 .header {
   position: fixed;
   top: 0;
@@ -5,28 +7,23 @@
   right: 0;
   z-index: 100;
   padding: 14px 0;
-  transition: padding 0.4s var(--ease);
+  transition: padding var(--dur-md) var(--ease);
 
   &__container {
     position: relative;
     z-index: 2;
-    display: flex;
-    align-items: center;
+    @include flex-center(24px);
     justify-content: space-between;
-    gap: 24px;
     max-width: calc(var(--container-width) + 32px);
     margin: 0 auto;
     padding: 10px 12px 10px 20px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     border: 1px solid transparent;
-    transition:
-      background-color 0.4s var(--ease),
-      border-color 0.4s var(--ease),
-      backdrop-filter 0.4s var(--ease);
+    @include transition((background-color, border-color, backdrop-filter));
   }
 
   &.is-scrolled &__container {
-    background: rgba(16, 16, 19, 0.72);
+    background: var(--color-header-glass);
     border-color: var(--color-border);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -39,19 +36,17 @@
   }
 
   &__nav-list {
-    display: flex;
-    align-items: center;
-    gap: 2px;
+    @include flex-center(2px);
   }
 
   &__nav-link {
     position: relative;
     display: block;
     padding: 10px 16px;
-    font-size: 14px;
+    font-size: var(--fs-ui);
     font-weight: 600;
     color: var(--color-text-secondary);
-    transition: color 0.3s ease;
+    transition: color var(--dur-sm) ease;
 
     &.is-active {
       color: var(--color-text-primary);
@@ -59,11 +54,10 @@
   }
 
   &__nav-pill {
-    position: absolute;
-    inset: 0;
-    border-radius: 999px;
-    background: rgba(244, 241, 236, 0.08);
-    border: 1px solid var(--color-border);
+    @include fill;
+    border-radius: var(--radius-pill);
+    background: rgba(var(--rgb-light), 0.08);
+    border: var(--border);
   }
 
   &__nav-text {
@@ -71,15 +65,13 @@
   }
 
   &__actions {
-    display: flex;
-    align-items: center;
-    gap: 18px;
+    @include flex-center(18px);
   }
 
   &__phone {
-    font-size: 13px;
+    font-size: var(--fs-small);
     color: var(--color-text-secondary);
-    transition: color 0.3s ease;
+    transition: color var(--dur-sm) ease;
 
     &:hover {
       color: var(--color-accent);
@@ -91,8 +83,8 @@
     position: relative;
     width: 46px;
     height: 46px;
-    border-radius: 50%;
-    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-round);
+    border: var(--border-strong);
 
     span {
       position: absolute;
@@ -101,7 +93,7 @@
       height: 2px;
       border-radius: 2px;
       background: var(--color-text-primary);
-      transition: transform 0.4s var(--ease), top 0.4s var(--ease);
+      @include transition((transform, top));
 
       &:nth-child(1) {
         top: 18px;
@@ -113,14 +105,15 @@
     }
   }
 
+  // Две полоски бургера складываются в крестик
   &.is-menu-open &__burger span {
+    top: 22px;
+
     &:nth-child(1) {
-      top: 22px;
       transform: rotate(45deg);
     }
 
     &:nth-child(2) {
-      top: 22px;
       transform: rotate(-45deg);
     }
   }
@@ -129,8 +122,7 @@
     position: fixed;
     inset: 0;
     z-index: 99;
-    display: flex;
-    flex-direction: column;
+    @include column;
     justify-content: space-between;
     padding: calc(var(--header-height) + 40px) 24px 40px;
     background: var(--color-bg);
@@ -138,8 +130,7 @@
   }
 
   &__mobile-nav {
-    display: flex;
-    flex-direction: column;
+    @include column;
   }
 
   &__mobile-link {
@@ -147,12 +138,9 @@
     align-items: baseline;
     gap: 16px;
     padding: 14px 0;
-    border-bottom: 1px solid var(--color-border);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(26px, 7vw, 40px);
-    letter-spacing: -0.02em;
-    transition: color 0.3s ease;
+    border-bottom: var(--border);
+    @include display(var(--fs-menu));
+    transition: color var(--dur-sm) ease;
 
     &:hover {
       color: var(--color-accent);
@@ -160,14 +148,12 @@
   }
 
   &__mobile-index {
-    font-size: 12px;
+    font-size: var(--fs-label);
     color: var(--color-accent);
   }
 
   &__mobile-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    @include column(18px);
     margin-top: 40px;
   }
 
@@ -175,13 +161,13 @@
     font-size: 20px;
   }
 
-  @media (max-width: 1180px) {
+  @include bp(xxl) {
     &__phone {
       display: none;
     }
   }
 
-  @media (max-width: 1020px) {
+  @include bp(lg) {
     &__nav {
       display: none;
     }
@@ -191,7 +177,7 @@
     }
   }
 
-  @media (max-width: 560px) {
+  @include bp(xxs) {
     padding: 10px 0;
 
     &__container {

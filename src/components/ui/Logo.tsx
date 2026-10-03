@@ -1,3 +1,4 @@
+import { CONTENT } from '../../data';
 import './Logo.scss';
 
 export function LogoMark({ className = '' }: { className?: string }) {
@@ -12,9 +13,10 @@ export function LogoMark({ className = '' }: { className?: string }) {
 
 export default function Logo({ onClick }: { onClick?: () => void }) {
   return (
-    <a href="#hero" className="logo" onClick={onClick} aria-label="РУЛЁЖКА — на главную">
+    <a href="#hero" className="logo" onClick={onClick} aria-label={CONTENT.brand.logoLabel}>
       <LogoMark className="logo__mark" />
       <span className="logo__body" aria-hidden="true">
+        {/* «РУЛЁЖКА»: точки над Ё нарисованы красными квадратами */}
         <span className="logo__text">
           РУЛ
           <span className="logo__yo">
@@ -23,7 +25,7 @@ export default function Logo({ onClick }: { onClick?: () => void }) {
           </span>
           ЖКА
         </span>
-        <span className="logo__sub">ТЮНИНГ-АТЕЛЬЕ</span>
+        <span className="logo__sub">{CONTENT.brand.logoSub}</span>
       </span>
     </a>
   );
